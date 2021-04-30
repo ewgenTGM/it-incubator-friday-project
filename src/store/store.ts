@@ -12,4 +12,7 @@ const rootReducer = combineReducers({
     login: loginReducer
 });
 
-const store = createStore(rootReducer);
+export const store = createStore(rootReducer);
+
+//@ts-ignore
+window.store = store;
