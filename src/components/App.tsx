@@ -1,5 +1,5 @@
 import React from 'react';
-import {BrowserRouter} from 'react-router-dom';
+import {BrowserRouter, HashRouter} from 'react-router-dom';
 import {Routes} from '../routes/Routes';
 import {Navbar} from './navbar/Navbar';
 
@@ -8,10 +8,10 @@ function App() {
         <>
             <h1>This is mega super friday project</h1>
             <div>
-                <BrowserRouter>
+                <HashRouter>
                     <Navbar/>
                     <Routes/>
-                </BrowserRouter>
+                </HashRouter>
             </div>
         </>
     );
