@@ -1,5 +1,3 @@
-import React from 'react';
-
 type StateType = typeof initialState;
 
 const initialState = {};

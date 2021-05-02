@@ -2,7 +2,9 @@
     display: flex;
     justify-content: flex-start;
     align-items: center;
-    list-style: none
+    list-style: none;
+    padding: 0;
+
 }
 
 .navbar ul li:not(:last-child) {

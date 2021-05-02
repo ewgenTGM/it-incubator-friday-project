@@ -1,20 +1,21 @@
 import React from 'react';
-import {BrowserRouter, HashRouter} from 'react-router-dom';
+import {HashRouter} from 'react-router-dom';
 import {Routes} from '../routes/Routes';
 import {Navbar} from './navbar/Navbar';
+import commonStyles from '../components/common/commonStyle.module.css';
 
 function App() {
-    return (
-        <>
-            <h1>This is mega super friday project</h1>
-            <div>
-                <HashRouter>
-                    <Navbar/>
-                    <Routes/>
-                </HashRouter>
-            </div>
-        </>
-    );
+  return (
+    <>
+      <HashRouter>
+        <Navbar/>
+        <div className={commonStyles.container}>
+          <h1 style={{textAlign: 'center'}}>This is mega super friday project</h1>
+          <Routes/>
+        </div>
+      </HashRouter>
+    </>
+  );
 }
 
 export default App;
