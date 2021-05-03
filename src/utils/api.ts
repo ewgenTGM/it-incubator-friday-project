@@ -32,7 +32,13 @@ export const api = {
 
   me() {
     return instance.post<LoginResponseType>('/auth/me', {}).then(res => res.data);
+  },
+
+  register(email: string, password: string) {
+    return instance.post<RegisterResponseType>('/auth/register', {email, password}).then(res => res.data);
   }
+
+
 };
 
 type LoginResponseType = {
@@ -52,4 +58,9 @@ type LoginResponseType = {
 type InfoResponseType = {
   info: string
   error: string
+}
+
+type RegisterResponseType = {
+  addedUser: any
+  error?: string
 }

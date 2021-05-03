@@ -12,7 +12,7 @@ export const NotFound: React.FC<PropsType> = props => {
       <img
         src={img404}
         alt="oops!"/>
-      <NavLink to={'/test'}>
+      <NavLink to={'/test-component'}>
         На главную
       </NavLink>
     </div>
