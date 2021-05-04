@@ -1,0 +1,26 @@
+.registerPage {
+    height: 100vh;
+    width: 100%;
+}
+
+.registerContainer {
+    display: flex;
+    flex-direction: column;
+}
+
+.registerForm {
+    height: 500px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+
+input {
+    width: 200px;
+    margin-bottom: 10px;
+}
+
+button {
+    width: 100px;
+}

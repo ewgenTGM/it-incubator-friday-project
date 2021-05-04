@@ -1,9 +1,10 @@
-import {combineReducers} from 'redux';
+import {combineReducers, applyMiddleware} from 'redux';
 import {testReducer} from './test-reducer';
 import {profileReducer} from './profile-reducer';
 import {registrationReducer} from './registration-reducer';
 import {loginReducer} from './login-reducer';
 import {createStore} from 'redux';
+import thunk from "redux-thunk"
 
 const rootReducer = combineReducers({
     test: testReducer,
@@ -12,7 +13,7 @@ const rootReducer = combineReducers({
     login: loginReducer
 });
 
-export const store = createStore(rootReducer);
+export const store = createStore(rootReducer, applyMiddleware(thunk));
 
 //@ts-ignore
 window.store = store;
