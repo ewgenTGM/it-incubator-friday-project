@@ -12,8 +12,11 @@ export const PasswordRecovery: React.FC<PropsType> = props => {
   const sendData = async () => {
     setLoading(true);
     // Пока просто заглушка
-    await api.passRecovery(email);
-    setLoading(false);
+    setTimeout(() => {
+      setLoading(false);
+    }, 2000);
+    // await api.passRecovery(email);
+    // setLoading(false);
   };
 
   return (
