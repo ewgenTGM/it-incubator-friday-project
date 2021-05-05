@@ -3,7 +3,7 @@ import styles from "./Register.module.css"
 import {useDispatch} from "react-redux";
 import {registerTC} from "../../store/registration-reducer";
 
-export const Register = () => {
+export const Register:React.VFC = () => {
 
     const dispatch = useDispatch()
 

@@ -4,7 +4,7 @@ const LOCAL_URL = 'http://localhost:7542/2.0/';
 const REMOTE_URL = 'https://neko-back.herokuapp.com/2.0';
 const FROM = 'test-front-admin <test@test.com>';
 
-const instance = axios.create({baseURL: LOCAL_URL});
+const instance = axios.create({baseURL: REMOTE_URL, withCredentials: true});
 
 export const api = {
 
@@ -38,10 +38,9 @@ export const api = {
     return instance.post<RegisterResponseType>('/auth/register', {email, password}).then(res => res.data);
   }
 
-
 };
 
-type LoginResponseType = {
+export type LoginResponseType = {
   _id: string;
   email: string;
   name: string;

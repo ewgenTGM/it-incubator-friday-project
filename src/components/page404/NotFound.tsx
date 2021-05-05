@@ -9,10 +9,10 @@ export const NotFound: React.FC<PropsType> = props => {
 
   return (
     <div className={styles.notFound}>
-      <img
-        src={img404}
-        alt="oops!"/>
-      <NavLink to={'/test-component'}>
+      <div className={styles.rotate}>
+        <span>404</span>
+      </div>
+      <NavLink to={'/test'}>
         На главную
       </NavLink>
     </div>

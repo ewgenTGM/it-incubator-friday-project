@@ -1,5 +1,6 @@
 import React, {useState} from 'react';
 import styles from './PasswordRecovery.module.css';
+import {api} from '../../utils/api';
 
 type PropsType = {};
 
@@ -11,9 +12,8 @@ export const PasswordRecovery: React.FC<PropsType> = props => {
   const sendData = async () => {
     setLoading(true);
     // Пока просто заглушка
-    setTimeout(() => {
-      setLoading(false);
-    }, 3000);
+    await api.passRecovery(email);
+    setLoading(false);
   };
 
   return (

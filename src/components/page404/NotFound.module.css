@@ -5,11 +5,22 @@
     align-items: center;
 }
 
-.notFound img {
+.rotate {
+    display: flex;
+    align-items: center;
+    justify-content: center;
     width: 600px;
-    -webkit-filter: drop-shadow(5px 5px 5px #222);
-    filter: drop-shadow(5px 5px 5px #222);
+    height: 600px;
+    border: 20px solid black;
+    border-radius: 50%;
+    box-shadow: 0 0 10px black, inset 0 0 10px black;
+
     animation: rotate infinite 4s;
+}
+
+.rotate span {
+    font-size: 250px;
+    text-shadow: 0 0 10px black;
 }
 
 .notFound a {
