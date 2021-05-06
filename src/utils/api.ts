@@ -36,6 +36,9 @@ export const api = {
 
   register(email: string, password: string) {
     return instance.post<RegisterResponseType>('/auth/register', {email, password}).then(res => res.data);
+  },
+  changePass(password: string, resetPasswordToken: string) {
+    return instance.post('/auth/set-new-password', {password, resetPasswordToken})
   }
 
 };

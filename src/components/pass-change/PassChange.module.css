@@ -1,0 +1,17 @@
+.passChange {
+    height: 100vh;
+    width: 100%;
+}
+
+.passChangeContainer {
+    display: flex;
+    justify-content: center;
+}
+
+.passChangeForm {
+    height: 500px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
