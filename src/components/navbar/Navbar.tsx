@@ -5,13 +5,11 @@ import styles from './Navbar.module.css';
 import commonStyles from '../common/commonStyle.module.css';
 import {useDispatch, useSelector} from 'react-redux';
 import {AppStateType} from '../../store/store';
-import {api} from '../../utils/api';
-import {LoginStateType, logoutTC} from '../../store/login-reducer';
+import {logoutTC} from '../../store/login-reducer';
 
 export function Navbar() {
 
   const isAuth = useSelector<AppStateType, boolean>(state => state.appStatus.isAuth);
-  const loginStatus = useSelector<AppStateType, LoginStateType>(state => state.login);
   const dispatch = useDispatch();
 
   const logout = () => {

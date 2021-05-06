@@ -11,6 +11,7 @@ function App() {
 
   const dispatch = useDispatch();
   const isInitialized = useSelector<AppStateType, boolean>(state => state.appStatus.isInitialized);
+  const isAuth = useSelector<AppStateType, boolean>(state => state.appStatus.isAuth);
 
   useEffect(() => {
     dispatch(AppInitializeTC());
@@ -20,7 +21,7 @@ function App() {
     <>
       {isInitialized
         ? <HashRouter>
-          <Navbar/>
+          {isAuth && <Navbar/>}
           <div className={commonStyles.container}>
             <h1 style={{textAlign: 'center'}}>This is mega super friday project</h1>
             <Routes/>

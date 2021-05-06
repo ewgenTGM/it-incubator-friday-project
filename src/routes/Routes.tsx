@@ -30,21 +30,27 @@ export const Routes: React.VFC = () => {
         />
         <Route
           path={PATH.LOGIN}
+          exact
           render={() => <LoginPage/>}/>
         <Route
           path={PATH.REGISTER}
+          exact
           render={() => <RegisterPage/>}/>
         <Route
           path={PATH.PROFILE}
+          exact
           render={() => <ProfilePage/>}/>
         <Route
           path={PATH.PASS_RECOVERY}
+          exact
           render={() => <PassRecoveryPage/>}/>
         <Route
-          path={PATH.PASS_CHANGE}
+          path={PATH.PASS_CHANGE + '/:token'}
+          exact
           render={() => <PassChangePage/>}/>
         <Route
           path={PATH.TEST}
+          exact
           render={() => <TestPage/>}/>
         <Route render={() => <Page404/>}/>
       </Switch>
