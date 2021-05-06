@@ -3,7 +3,7 @@ import {useParams} from 'react-router-dom';
 
 type PropsType = {};
 
-export const PassChange: React.FC<PropsType> = props => {
+export const SetNewPass: React.FC<PropsType> = props => {
 
   const {token} = useParams<{token: string}>();
 
