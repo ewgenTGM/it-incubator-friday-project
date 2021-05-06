@@ -15,7 +15,7 @@ export enum PATH {
   PAGE404 = '/404',
   PASS_RECOVERY = '/password-recovery',
   TEST = '/test',
-  PASS_CHANGE = '/password-change'
+  SET_NEW_PASS = '/set-new-password'
 }
 
 export const Routes: React.VFC = () => {
@@ -45,7 +45,7 @@ export const Routes: React.VFC = () => {
           exact
           render={() => <PassRecoveryPage/>}/>
         <Route
-          path={PATH.PASS_CHANGE + '/:token'}
+          path={PATH.SET_NEW_PASS + '/:token'}
           exact
           render={() => <PassChangePage/>}/>
         <Route

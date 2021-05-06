@@ -6,13 +6,15 @@ import {loginReducer} from './login-reducer';
 import {createStore} from 'redux';
 import thunk from 'redux-thunk';
 import {appReducer} from './app-reducer';
+import {passChangeReducer} from "./passChange-reducer";
 
 const rootReducer = combineReducers({
   test: testReducer,
   profile: profileReducer,
   registration: registrationReducer,
   login: loginReducer,
-  appStatus: appReducer
+  appStatus: appReducer,
+  passChange: passChangeReducer
 });
 
 export type AppStateType = ReturnType<typeof rootReducer>;
