@@ -4,7 +4,7 @@ import {setAuthDataAC, setIsAuthAC} from './app-reducer';
 
 enum LOGIN_ACTION_TYPE {
   SET_ERROR = 'LOGIN/SET_ERROR',
-  SET_LOADING = 'APP/SET_LOADING'
+  SET_LOADING = 'LOGIN/SET_LOADING'
 }
 
 // Action creators
@@ -51,10 +51,13 @@ export const logoutTC = () => async (dispatch: Dispatch<any>) => {
 
 export type LoginReducerActionsType = ReturnType<typeof setErrorAC> | ReturnType<typeof setLoadingAC>;
 
-export type LoginStateType = typeof initialState;
+export type LoginStateType = {
+  error: null | string
+  loading: boolean
+};
 
-const initialState = {
-  error: null as null | string,
+const initialState: LoginStateType = {
+  error: null,
   loading: false
 };
 
@@ -64,12 +67,12 @@ export const loginReducer = (state: LoginStateType = initialState, action: Login
   switch (action.type) {
     case LOGIN_ACTION_TYPE.SET_ERROR: {
       return {
-        ...state, error: action.payload.error
+        ...state, ...action.payload
       };
     }
     case LOGIN_ACTION_TYPE.SET_LOADING: {
       return {
-        ...state, loading: action.payload.loading
+        ...state, ...action.payload
       };
     }
     default:
