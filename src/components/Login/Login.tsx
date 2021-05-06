@@ -1,77 +1,82 @@
 import React, {useState} from 'react';
 import styles from './Login.module.css';
-import {api} from '../../utils/api';
+import {useDispatch, useSelector} from 'react-redux';
+import {LoginStateType, loginTC} from '../../store/login-reducer';
+import {AppStateType} from '../../store/store';
+import {Redirect} from 'react-router-dom';
 
 export const Login: React.VFC = () => {
   const [email, setEmail] = useState<string>('');
   const [pwd, setPwd] = useState<string>('');
   const [remember, setRemember] = useState<boolean>(false);
-  const [error, setError] = useState<boolean>(false);
-  const [loading, setLoading] = useState<boolean>(false);
-  const [response, setResponse] = useState<any | null>(null);
 
-  const loginCallback = async (event: React.MouseEvent<HTMLButtonElement>) => {
-    setResponse(null);
-    setError(false);
+  const dispatch = useDispatch();
+  const isAuth = useSelector<AppStateType, boolean>(state => state.appStatus.isAuth);
+  const loginStatus = useSelector<AppStateType, LoginStateType>(state => state.login);
+
+  const loginCallback = (event: React.MouseEvent<HTMLButtonElement>) => {
+    event.preventDefault();
+    dispatch(loginTC(email, pwd, remember));
     setEmail('');
     setPwd('');
     setRemember(false);
-
-    event.preventDefault();
-    try {
-      const res = await api.login(email, pwd, remember);
-      setResponse(res);
-    } catch (e) {
-      setError(true);
-      setResponse(e.response ? e.response.data.error : e.message);
-    } finally {
-      setLoading(false);
-    }
   };
-  return (
-    <div>
-      Логинизация
-      <form className={styles.form}>
-        <div className={styles.formGroup}>
-          <label
-            htmlFor="email"
-            className={styles.fieldLabel}>Введите email</label>
-          <input
-            value={email}
-            onChange={e => setEmail(e.currentTarget.value)}
-            className={styles.textField}
-            id={'email'}
-            type="email"/>
-        </div>
-        <div className={styles.formGroup}>
-          <label
-            htmlFor="password"
-            className={styles.fieldLabel}>Введите пароль</label>
-          <input
-            value={pwd}
-            onChange={e => setPwd(e.currentTarget.value)}
-            className={styles.textField}
-            id={'password'}
-            type="password"/>
-        </div>
-        <div className={styles.formGroup}>
-          <label
-            htmlFor="rememberMe"
-            className={styles.fieldLabel}>Запомнить меня</label>
-          <input
-            checked={remember}
-            onChange={e => setRemember(e.currentTarget.checked)}
-            id={'rememberMe'}
-            type="checkbox"/>
-        </div>
-        <div className={styles.button}>
-          <button onClick={loginCallback}>Войти</button>
-        </div>
-      </form>
-      <div>
-        {response &&
-        <pre className={error ? styles.error : ''}>{JSON.stringify(response, null, 2)}</pre>}
+
+  const errorBlock: JSX.Element = <div className={styles.error}>{loginStatus.error}</div>;
+
+  const form: JSX.Element = <div>
+    Логинизация
+    <form className={styles.form}>
+      <div className={styles.formGroup}>
+        <label
+          htmlFor="email"
+          className={styles.fieldLabel}>Введите email</label>
+        <input
+          value={email}
+          onChange={e => setEmail(e.currentTarget.value)}
+          className={styles.textField}
+          id={'email'}
+          type="email"/>
       </div>
-    </div>
+      <div className={styles.formGroup}>
+        <label
+          htmlFor="password"
+          className={styles.fieldLabel}>Введите пароль</label>
+        <input
+          value={pwd}
+          onChange={e => setPwd(e.currentTarget.value)}
+          className={styles.textField}
+          id={'password'}
+          type="password"/>
+      </div>
+      <div className={styles.formGroup}>
+        <label
+          htmlFor="rememberMe"
+          className={styles.fieldLabel}>Запомнить меня</label>
+        <input
+          checked={remember}
+          onChange={e => setRemember(e.currentTarget.checked)}
+          id={'rememberMe'}
+          type="checkbox"/>
+      </div>
+      <div className={styles.button}>
+        <button onClick={loginCallback}>Войти</button>
+      </div>
+    </form>
+  </div>;
+
+  if (isAuth) {
+    return <Redirect to={'/profile'}/>;
+  }
+
+  return (
+    <>
+      {loginStatus.loading
+        ? <span>Ждите отстоя пива...</span>
+        : form
+      }
+      {loginStatus.error && errorBlock}
+    </>
   );
-};
+}
+;

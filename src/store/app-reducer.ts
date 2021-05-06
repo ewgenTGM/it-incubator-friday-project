@@ -2,10 +2,10 @@ import {Dispatch} from 'redux';
 import {api, LoginResponseType} from '../utils/api';
 
 enum ACTION_TYPE {
-  SET_IS_INITIALIZED = 'SET_IS_INITIALIZED',
-  SET_IS_AUTH = 'SET_IS_AUTH',
-  SET_AUTH_DATA = 'SET_AUTH_DATA',
-  SET_ERROR = 'SET_ERROR'
+  SET_IS_INITIALIZED = 'APP/SET_IS_INITIALIZED',
+  SET_IS_AUTH = 'APP/SET_IS_AUTH',
+  SET_AUTH_DATA = 'APP/SET_AUTH_DATA',
+  SET_ERROR = 'APP/SET_ERROR'
 }
 
 // Action creators
@@ -22,7 +22,7 @@ export const setIsAuthAC = (isAuth: boolean) => {
 export const setError = (error: string | null) => {
   return {type: ACTION_TYPE.SET_ERROR as const, payload: {error}};
 };
-export const setAuthData = (authData: LoginResponseType) => {
+export const setAuthDataAC = (authData: LoginResponseType | {}) => {
   return {type: ACTION_TYPE.SET_AUTH_DATA as const, payload: {authData}};
 };
 // ------------------
@@ -31,7 +31,7 @@ export const setAuthData = (authData: LoginResponseType) => {
 export const AppInitializeTC = () => async (dispatch: Dispatch) => {
   try {
     const response = await api.me();
-    dispatch(setAuthData(response));
+    dispatch(setAuthDataAC(response));
     dispatch(setIsAuthAC(true));
   } catch (e) {
     dispatch(setError(e.response ? e.response.data.error : e.message));
@@ -45,13 +45,14 @@ export type AppReducerActionsType =
   ReturnType<typeof setIsInitializedAC>
   | ReturnType<typeof setIsAuthAC>
   | ReturnType<typeof setError>
-  | ReturnType<typeof setAuthData>
+  | ReturnType<typeof setAuthDataAC>
 
 type StateType = typeof initialState;
+
 const initialState = {
   isInitialized: false,
   isAuth: false,
-  authData: {},
+  authData: {} as {} | LoginResponseType,
   error: null as string | null
 };
 

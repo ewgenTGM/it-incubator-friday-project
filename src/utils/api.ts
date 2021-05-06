@@ -2,7 +2,7 @@ import axios from 'axios';
 
 const LOCAL_URL = 'http://localhost:7542/2.0/';
 const REMOTE_URL = 'https://neko-back.herokuapp.com/2.0';
-const FROM = 'test-front-admin <test@test.com>';
+const FROM = 'test-front-admin<test@test.com>';
 
 const instance = axios.create({baseURL: REMOTE_URL, withCredentials: true});
 
@@ -56,7 +56,7 @@ export type LoginResponseType = {
 
 type InfoResponseType = {
   info: string
-  error: string
+  error?: string
 }
 
 type RegisterResponseType = {

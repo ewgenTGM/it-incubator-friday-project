@@ -15,7 +15,7 @@ export const registrationReducer = (state: StateType = initialState, action: any
 export const registerTC = (email: string, password: string) => async (dispatch: Dispatch<any>) => {
     try {
         const register = await api.register(email, password)
-        alert('Регитсрация прошла успешно')
+        alert('Регистрация прошла успешно!')
     }
     catch (e) {
         alert(e.response.data.error)
