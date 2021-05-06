@@ -1,11 +1,16 @@
 import React, {ChangeEvent, useState} from 'react';
 import styles from "./Register.module.css"
-import {useDispatch} from "react-redux";
-import {registerTC} from "../../store/registration-reducer";
+import {useDispatch, useSelector} from "react-redux";
+import {InitialStateType, registerTC} from "../../store/registration-reducer";
+import {AppStateType} from "../../store/store";
+import {emailValidator} from "../../utils/validators/email-validator";
+import {passwordValidator} from "../../utils/validators/password-validator";
+import {Redirect} from "react-router-dom";
 
-export const Register:React.VFC = () => {
+export const Register: React.VFC = () => {
 
     const dispatch = useDispatch()
+    const registerState = useSelector<AppStateType, InitialStateType>(state => state.registration)
 
     const [email, setEmail] = useState('')
     const [password, setPassword] = useState('')
@@ -19,16 +24,30 @@ export const Register:React.VFC = () => {
     }
 
     const onSubmit = () => {
-       dispatch(registerTC(email, password))
+        dispatch(registerTC(email, password))
+        setPassword('')
     }
+
+    if (registerState.isRegisterSuccess) {
+        return <Redirect to={'/login'}/>
+    }
+
     return (
         <div className={styles.registerPage}>
             <div className={styles.registerContainer}>
-                <div className={styles.registerForm}>
-                    <input value={email} type="email" name="email" onChange={changeEmail}/>
-                    <input value={password} type="password" onChange={changePassword}/>
-                    <button onClick={onSubmit}>Register</button>
-                </div>
+                {!registerState.loading ? <div className={styles.registerForm}>
+                        <input value={email} type="email" name="email" onChange={changeEmail}/>
+                        <input value={password} type="password" onChange={changePassword}/>
+                        {registerState.error && <div style={{color: "red"}}>{registerState.error}</div>}
+                        <button disabled={!emailValidator(email) || !passwordValidator(password)}
+                                onClick={onSubmit}>Register
+                        </button>
+                        {!emailValidator(email) && <span style={{color: "red"}}>Неверный email</span>}
+                        {!passwordValidator(password) && <span style={{color: "red"}}>Пароль должен содержать более 6 символов</span>}
+                    </div>
+                    :
+                    <span>Ждите отстоя пива...</span>
+                }
             </div>
         </div>
     );
