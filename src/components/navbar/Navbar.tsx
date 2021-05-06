@@ -51,11 +51,11 @@ export function Navbar() {
           </NavLink>
         </li>
         <li>
-          <NavLink
-            to={PATH.PASS_CHANGE}
-            activeClassName={styles.linkActive}>
-            Pass change
-          </NavLink>
+          {/*<NavLink
+           to={PATH.PASS_CHANGE}
+           activeClassName={styles.linkActive}>
+           Pass change
+           </NavLink>*/}
         </li>
         <li>
           <NavLink
