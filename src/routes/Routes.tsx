@@ -6,7 +6,7 @@ import {ProfilePage} from '../Pages/ProfilePage';
 import {PassRecoveryPage} from '../Pages/PassRecoveryPage';
 import {TestPage} from '../Pages/TestPage';
 import {Page404} from '../Pages/Page404';
-import {PassChangePage} from '../Pages/PassChangePage';
+import {SetNewPasswordPage} from '../Pages/SetNewPasswordPage';
 
 export enum PATH {
   LOGIN = '/login',
@@ -15,7 +15,7 @@ export enum PATH {
   PAGE404 = '/404',
   PASS_RECOVERY = '/password-recovery',
   TEST = '/test',
-  SET_NEW_PASS = '/set-new-password'
+  SET_NEW_PASSWORD = '/set-new-password'
 }
 
 export const Routes: React.VFC = () => {
@@ -45,9 +45,9 @@ export const Routes: React.VFC = () => {
           exact
           render={() => <PassRecoveryPage/>}/>
         <Route
-          path={PATH.SET_NEW_PASS + '/:token'}
+          path={PATH.SET_NEW_PASSWORD + '/:token'}
           exact
-          render={() => <PassChangePage/>}/>
+          render={() => <SetNewPasswordPage/>}/>
         <Route
           path={PATH.TEST}
           exact

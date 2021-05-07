@@ -22,6 +22,10 @@ export const api = {
     return instance.post<InfoResponseType>('/auth/forgot', reqBody).then(res => res.data);
   },
 
+  setNewPassword(password: string, resetPasswordToken: string) {
+    return instance.post<InfoResponseType>('/auth/set-new-password', {password, resetPasswordToken});
+  },
+
   login(email: string, password: string, rememberMe: boolean = false) {
     return instance.post<LoginResponseType>('/auth/login', {email, password, rememberMe}).then(res => res.data);
   },

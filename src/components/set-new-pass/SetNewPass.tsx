@@ -9,7 +9,7 @@ import {emailValidator} from "../../utils/validators/email-validator";
 
 type PropsType = {};
 
-export const PassChange: React.FC<PropsType> = props => {
+export const SetNewPass: React.FC<PropsType> = props => {
 
     const [newPassword, setNewPassword] = useState('')
     const [newPassword2, setConfirmPassword] = useState('')
