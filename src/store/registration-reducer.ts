@@ -1,5 +1,12 @@
 import {Dispatch} from "react";
 import {api} from "../utils/api";
+import {AppThunk} from './store';
+
+enum REGISTRATION_ACTION_TYPE {
+    SET_ERROR = 'REGISTRATION/SET_ERROR',
+    SET_LOADING = 'REGISTRATION/SET_LOADING',
+    SET_IS_REGISTER_SUCCESS = 'REGISTRATION/SET_IS_REGISTER_SUCCESS'
+}
 
 export type InitialStateType = {
     error: null | string
@@ -28,11 +35,7 @@ export const registrationReducer = (state = initialState, action: RegistrationRe
 };
 
 
-enum REGISTRATION_ACTION_TYPE {
-    SET_ERROR = 'REGISTRATION/SET_ERROR',
-    SET_LOADING = 'REGISTRATION/SET_LOADING',
-    SET_IS_REGISTER_SUCCESS = 'REGISTRATION/SET_IS_REGISTER_SUCCESS'
-}
+
 
 // Action creators
 
@@ -47,7 +50,7 @@ const setLoadingAC = (loading: boolean) => {
     return {type: REGISTRATION_ACTION_TYPE.SET_LOADING as const, payload: {loading}};
 };
 
-export const registerTC = (email: string, password: string) => async (dispatch: Dispatch<any>) => {
+export const registerTC = (email: string, password: string): AppThunk => async dispatch => {
     dispatch(setLoadingAC(true))
     dispatch(setErrorAC(null))
     try {
@@ -62,7 +65,7 @@ export const registerTC = (email: string, password: string) => async (dispatch: 
 
 }
 
-type RegistrationReducerActionsType =
+export type RegistrationReducerActionsType =
     ReturnType<typeof setErrorAC>
     | ReturnType<typeof setLoadingAC>
     | ReturnType<typeof setIsRegisterSuccessAC>

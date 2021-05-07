@@ -1,6 +1,7 @@
 import {Dispatch} from 'redux';
 import {api} from '../utils/api';
 import {setAuthDataAC, setIsAuthAC} from './app-reducer';
+import {AppThunk} from './store';
 
 enum LOGIN_ACTION_TYPE {
   SET_ERROR = 'LOGIN/SET_ERROR',
@@ -21,7 +22,7 @@ const setLoadingAC = (loading: boolean) => {
 
 // Thunk creators
 
-export const loginTC = (email: string, password: string, remember: boolean) => async (dispatch: Dispatch<any>) => {
+export const loginTC = (email: string, password: string, remember: boolean): AppThunk => async dispatch => {
   dispatch(setErrorAC(null));
   dispatch(setLoadingAC(true));
   try {
@@ -65,16 +66,11 @@ const initialState: LoginStateType = {
 
 export const loginReducer = (state: LoginStateType = initialState, action: LoginReducerActionsType): LoginStateType => {
   switch (action.type) {
-    case LOGIN_ACTION_TYPE.SET_ERROR: {
+    case LOGIN_ACTION_TYPE.SET_ERROR:
+    case LOGIN_ACTION_TYPE.SET_LOADING:
       return {
         ...state, ...action.payload
       };
-    }
-    case LOGIN_ACTION_TYPE.SET_LOADING: {
-      return {
-        ...state, ...action.payload
-      };
-    }
     default:
       return state;
   }

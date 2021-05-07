@@ -1,5 +1,6 @@
 import {Dispatch} from 'redux';
 import {api, LoginResponseType} from '../utils/api';
+import {AppThunk} from './store';
 
 enum ACTION_TYPE {
   SET_IS_INITIALIZED = 'APP/SET_IS_INITIALIZED',
@@ -28,7 +29,7 @@ export const setAuthDataAC = (authData: LoginResponseType | {}) => {
 // ------------------
 
 // Thunk creators
-export const AppInitializeTC = () => async (dispatch: Dispatch) => {
+export const AppInitializeTC = (): AppThunk => async dispatch => {
   try {
     const response = await api.me();
     dispatch(setAuthDataAC(response));
@@ -58,15 +59,11 @@ const initialState = {
 
 export const appReducer = (state: StateType = initialState, action: AppReducerActionsType): StateType => {
   switch (action.type) {
-    case ACTION_TYPE.SET_IS_INITIALIZED: {
-      return {...state, isInitialized: action.payload.isInitialized};
-    }
-    case ACTION_TYPE.SET_IS_AUTH: {
-      return {...state, isAuth: action.payload.isAuth};
-    }
-    case ACTION_TYPE.SET_AUTH_DATA: {
-      return {...state, authData: action.payload.authData};
-    }
+    case ACTION_TYPE.SET_IS_INITIALIZED:
+    case ACTION_TYPE.SET_IS_AUTH:
+    case ACTION_TYPE.SET_AUTH_DATA:
+      return {...state, ...action.payload};
+
     default:
       return state;
   }

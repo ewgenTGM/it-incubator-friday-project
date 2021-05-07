@@ -4,8 +4,7 @@ import styles from './PassChange.module.css'
 import {useDispatch, useSelector} from "react-redux";
 import {changePassTC, PassChangeInitialStateType} from "../../store/passChange-reducer";
 import {AppStateType} from "../../store/store";
-import {confirmPassword, passwordValidator} from "../../utils/validators/password-validator";
-import {emailValidator} from "../../utils/validators/email-validator";
+import {matchPasswordValidator, passwordValidator} from '../../utils/validators/password-validator';
 
 type PropsType = {};
 
@@ -41,12 +40,12 @@ export const SetNewPass: React.FC<PropsType> = props => {
                         Введите новый пароль<input type="password" value={newPassword} onChange={changePassword}/>
                         Подтвердите новый пароль<input type="password" value={newPassword2}
                                                        onChange={changeConfirmPassword}/>
-                        <button disabled={!passwordValidator(newPassword) || !confirmPassword(newPassword, newPassword2)}
+                        <button disabled={!passwordValidator(newPassword) || !matchPasswordValidator(newPassword, newPassword2)}
                                 onClick={changePass}>Отправить
                         </button>
                         {!passwordValidator(newPassword) &&
                         <span style={{color: "red"}}>Пароль должен содержать более 6 символов</span>}
-                        {!confirmPassword(newPassword, newPassword2) &&
+                        {!matchPasswordValidator(newPassword, newPassword2) &&
                         <span style={{color: "red"}}>Пароли не совпадают</span>}
                     </div>
                     :
