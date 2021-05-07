@@ -1,20 +1,20 @@
 {
   "files": {
-    "main.css": "/it-incubator-friday-project/static/css/main.ebfb499a.chunk.css",
-    "main.js": "/it-incubator-friday-project/static/js/main.1465565d.chunk.js",
-    "main.js.map": "/it-incubator-friday-project/static/js/main.1465565d.chunk.js.map",
+    "main.css": "/it-incubator-friday-project/static/css/main.52c524f1.chunk.css",
+    "main.js": "/it-incubator-friday-project/static/js/main.ca669706.chunk.js",
+    "main.js.map": "/it-incubator-friday-project/static/js/main.ca669706.chunk.js.map",
     "runtime-main.js": "/it-incubator-friday-project/static/js/runtime-main.2ace3279.js",
     "runtime-main.js.map": "/it-incubator-friday-project/static/js/runtime-main.2ace3279.js.map",
-    "static/js/2.d0da4558.chunk.js": "/it-incubator-friday-project/static/js/2.d0da4558.chunk.js",
-    "static/js/2.d0da4558.chunk.js.map": "/it-incubator-friday-project/static/js/2.d0da4558.chunk.js.map",
+    "static/js/2.958e761e.chunk.js": "/it-incubator-friday-project/static/js/2.958e761e.chunk.js",
+    "static/js/2.958e761e.chunk.js.map": "/it-incubator-friday-project/static/js/2.958e761e.chunk.js.map",
     "index.html": "/it-incubator-friday-project/index.html",
-    "static/css/main.ebfb499a.chunk.css.map": "/it-incubator-friday-project/static/css/main.ebfb499a.chunk.css.map",
-    "static/js/2.d0da4558.chunk.js.LICENSE.txt": "/it-incubator-friday-project/static/js/2.d0da4558.chunk.js.LICENSE.txt"
+    "static/css/main.52c524f1.chunk.css.map": "/it-incubator-friday-project/static/css/main.52c524f1.chunk.css.map",
+    "static/js/2.958e761e.chunk.js.LICENSE.txt": "/it-incubator-friday-project/static/js/2.958e761e.chunk.js.LICENSE.txt"
   },
   "entrypoints": [
     "static/js/runtime-main.2ace3279.js",
-    "static/js/2.d0da4558.chunk.js",
-    "static/css/main.ebfb499a.chunk.css",
-    "static/js/main.1465565d.chunk.js"
+    "static/js/2.958e761e.chunk.js",
+    "static/css/main.52c524f1.chunk.css",
+    "static/js/main.ca669706.chunk.js"
   ]
 }
