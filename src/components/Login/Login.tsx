@@ -19,15 +19,12 @@ export const Login: React.VFC = () => {
     const loginCallback = (event: React.MouseEvent<HTMLButtonElement>) => {
       event.preventDefault();
       dispatch(loginTC(email, pwd, remember));
-      setEmail('');
       setPwd('');
-      setRemember(false);
     };
 
     const errorBlock: JSX.Element = <div className={styles.error}>{loginStatus.error}</div>;
 
     const form: JSX.Element = <div>
-      Логинизация
       <form className={styles.form}>
         <div className={styles.formGroup}>
           <label
@@ -51,7 +48,7 @@ export const Login: React.VFC = () => {
             id={'password'}
             type="password"/>
         </div>
-        <div className={styles.formGroup}>
+        <div className={styles.rememberMeFormGroup}>
           <label
             htmlFor="rememberMe"
             className={styles.fieldLabel}>Запомнить меня</label>
@@ -61,14 +58,13 @@ export const Login: React.VFC = () => {
             id={'rememberMe'}
             type="checkbox"/>
         </div>
-        {!emailValidator(email) && <span className={styles.error}>Неверный email</span>}
-        {!passwordValidator(pwd) && <span className={styles.error}>Короткий пароль</span>}
-        <div className={styles.button}>
           <button
+            className={styles.button}
             onClick={loginCallback}
             disabled={!emailValidator(email) || !passwordValidator(pwd)}>Войти
           </button>
-        </div>
+        {!emailValidator(email) && <span className={styles.error}>Некорректный email</span>}
+        {!passwordValidator(pwd) && <span className={styles.error}>Короткий пароль</span>}
       </form>
     </div>;
 
@@ -80,8 +76,7 @@ export const Login: React.VFC = () => {
       <>
         {loginStatus.loading
           ? <span>Ждите отстоя пива...</span>
-          : form
-        }
+          : form        }
         {loginStatus.error && errorBlock}
       </>
     );

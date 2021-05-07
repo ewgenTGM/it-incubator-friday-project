@@ -1,4 +1,3 @@
-import {Dispatch} from 'redux';
 import {api, LoginResponseType} from '../utils/api';
 import {AppThunk} from './store';
 

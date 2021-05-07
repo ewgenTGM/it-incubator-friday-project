@@ -1,11 +1,10 @@
-import {Dispatch} from 'redux';
 import {api} from '../utils/api';
 import {setAuthDataAC, setIsAuthAC} from './app-reducer';
 import {AppThunk} from './store';
 
 enum LOGIN_ACTION_TYPE {
   SET_ERROR = 'LOGIN/SET_ERROR',
-  SET_LOADING = 'LOGIN/SET_LOADING'
+  SET_LOADING = 'LOGIN/SET_LOADING',
 }
 
 // Action creators
@@ -36,7 +35,7 @@ export const loginTC = (email: string, password: string, remember: boolean): App
   }
 };
 
-export const logoutTC = () => async (dispatch: Dispatch<any>) => {
+export const logoutTC = (): AppThunk => async dispatch => {
   dispatch(setLoadingAC(true));
   dispatch(setErrorAC(null));
   try {

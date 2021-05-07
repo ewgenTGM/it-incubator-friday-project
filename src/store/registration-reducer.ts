@@ -1,4 +1,3 @@
-import {Dispatch} from "react";
 import {api} from "../utils/api";
 import {AppThunk} from './store';
 
@@ -33,9 +32,6 @@ export const registrationReducer = (state = initialState, action: RegistrationRe
             return state;
     }
 };
-
-
-
 
 // Action creators
 

@@ -1,0 +1,20 @@
+.loginPage {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.loginPage a {
+    color: green;
+}
+
+.h2 {
+    text-shadow: 0 0 1px black;
+    text-align: center;
+}
+
+.h4 {
+    text-align: center;
+    margin: 5px 0;
+}
