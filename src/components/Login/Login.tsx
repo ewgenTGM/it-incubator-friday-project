@@ -35,7 +35,8 @@ export const Login: React.VFC = () => {
             onChange={e => setEmail(e.currentTarget.value)}
             className={styles.textField}
             id={'email'}
-            type="email"/>
+            type="email"
+            placeholder={'email'}/>
         </div>
         <div className={styles.formGroup}>
           <label
@@ -46,7 +47,8 @@ export const Login: React.VFC = () => {
             onChange={e => setPwd(e.currentTarget.value)}
             className={styles.textField}
             id={'password'}
-            type="password"/>
+            type="password"
+            placeholder={'password'}/>
         </div>
         <div className={styles.rememberMeFormGroup}>
           <label
@@ -58,11 +60,11 @@ export const Login: React.VFC = () => {
             id={'rememberMe'}
             type="checkbox"/>
         </div>
-          <button
-            className={styles.button}
-            onClick={loginCallback}
-            disabled={!emailValidator(email) || !passwordValidator(pwd)}>Войти
-          </button>
+        <button
+          className={styles.button}
+          onClick={loginCallback}
+          disabled={!emailValidator(email) || !passwordValidator(pwd)}>Войти
+        </button>
         {!emailValidator(email) && <span className={styles.error}>Некорректный email</span>}
         {!passwordValidator(pwd) && <span className={styles.error}>Короткий пароль</span>}
       </form>
@@ -76,7 +78,7 @@ export const Login: React.VFC = () => {
       <>
         {loginStatus.loading
           ? <span>Ждите отстоя пива...</span>
-          : form        }
+          : form}
         {loginStatus.error && errorBlock}
       </>
     );
