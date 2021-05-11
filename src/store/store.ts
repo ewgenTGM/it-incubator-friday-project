@@ -7,6 +7,7 @@ import {createStore} from 'redux';
 import thunk, {ThunkAction} from 'redux-thunk';
 import {appReducer, AppReducerActionsType} from './app-reducer';
 import {passChangeReducer, PassChangeReducerActionsType} from './passChange-reducer';
+import {passRecoveryReducer, PassRecoveryReducerActionsType} from './pass-recovery-reducer';
 
 const rootReducer = combineReducers({
   test: testReducer,
@@ -14,7 +15,8 @@ const rootReducer = combineReducers({
   registration: registrationReducer,
   login: loginReducer,
   appStatus: appReducer,
-  passChange: passChangeReducer
+  passChange: passChangeReducer,
+  passRecovery: passRecoveryReducer
 });
 
 export type AppStateType = ReturnType<typeof rootReducer>;
@@ -27,7 +29,7 @@ type AppActionsType =
   AppReducerActionsType
   | LoginReducerActionsType
   | PassChangeReducerActionsType
-  | RegistrationReducerActionsType;
+  | RegistrationReducerActionsType | PassRecoveryReducerActionsType;
 
 export type AppThunk<ReturnType = void> = ThunkAction<ReturnType,
   AppStateType,

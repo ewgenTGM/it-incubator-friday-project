@@ -1,4 +1,3 @@
-import {Dispatch} from 'react';
 import {api} from '../utils/api';
 import {AppThunk} from './store';
 
@@ -8,19 +7,19 @@ enum PASS_CHANGE_ACTION_TYPE {
   SET_IS_CHANGED_PASS = 'PASS_CHANGE/SET_IS_CHANGED_PASS'
 }
 
-export type PassChangeInitialStateType = {
+export type PassChangeStateType = {
   error: null | string
   loading: boolean
   isChangedPass: boolean
 }
 
-const initialState: PassChangeInitialStateType = {
+const initialState: PassChangeStateType = {
   error: null,
   loading: false,
   isChangedPass: false
 };
 
-export const passChangeReducer = (state = initialState, action: PassChangeReducerActionsType): PassChangeInitialStateType => {
+export const passChangeReducer = (state = initialState, action: PassChangeReducerActionsType): PassChangeStateType => {
   switch (action.type) {
     case PASS_CHANGE_ACTION_TYPE.SET_ERROR:
     case PASS_CHANGE_ACTION_TYPE.SET_LOADING:

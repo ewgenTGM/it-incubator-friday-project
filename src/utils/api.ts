@@ -11,7 +11,7 @@ export const api = {
   passRecovery(email: string) {
     const htmlBody = `<div style="background-color: lime; padding: 15px">
                        password recovery link: 
-              <a href="http://localhost:3000/#/set-new-password/$token$">
+              <a href="https://ewgentgm.github.io/it-incubator-friday-project/#/set-new-password/$token$">
               link
               </a></div>`;
     const reqBody = {
@@ -19,7 +19,7 @@ export const api = {
       from: FROM,
       message: htmlBody
     };
-    return instance.post<InfoResponseType>('/auth/forgot', reqBody).then(res => res.data);
+    return instance.post<InfoResponseType>('/auth/forgot', reqBody);
   },
 
   setNewPassword(password: string, resetPasswordToken: string) {
@@ -57,7 +57,7 @@ export type LoginResponseType = {
   error?: string;
 }
 
-type InfoResponseType = {
+export type InfoResponseType = {
   info: string
   error?: string
 }

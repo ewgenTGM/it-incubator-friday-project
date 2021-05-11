@@ -2,7 +2,7 @@ import React, {ChangeEvent, useState} from 'react';
 import {Redirect, useParams} from 'react-router-dom';
 import styles from './PassChange.module.css'
 import {useDispatch, useSelector} from "react-redux";
-import {changePassTC, PassChangeInitialStateType} from "../../store/passChange-reducer";
+import {changePassTC, PassChangeStateType} from "../../store/passChange-reducer";
 import {AppStateType} from "../../store/store";
 import {matchPasswordValidator, passwordValidator} from '../../utils/validators/password-validator';
 
@@ -13,7 +13,7 @@ export const SetNewPass: React.FC<PropsType> = props => {
     const [newPassword, setNewPassword] = useState('')
     const [newPassword2, setConfirmPassword] = useState('')
 
-    const statePassReducer = useSelector<AppStateType, PassChangeInitialStateType>(state => state.passChange)
+    const statePassReducer = useSelector<AppStateType, PassChangeStateType>(state => state.passChange)
 
     const dispatch = useDispatch()
     const {token} = useParams<{ token: string }>();
