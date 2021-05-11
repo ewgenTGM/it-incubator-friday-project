@@ -1,5 +1,5 @@
 import {AppThunk} from './store';
-import {api} from '../utils/api';
+import {authApi} from '../utils/authApi';
 
 export enum PASS_RECOVERY_ACTION_TYPE {
   SET_ERROR = 'PASS_RECOVERY/SET_ERROR',
@@ -49,7 +49,7 @@ export const passRecoveryTC = (email: string): AppThunk => async dispatch => {
   dispatch(setLoadingAC(true));
   dispatch(setErrorAC(null));
   try {
-    const changePassResponse = await api.passRecovery(email);
+    const changePassResponse = await authApi.passRecovery(email);
     dispatch(setIsEmailSend(true));
   } catch (e) {
     dispatch(setErrorAC(e.response ? e.response.data.error : e.message));

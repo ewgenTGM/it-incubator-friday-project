@@ -2,7 +2,7 @@ import React, {useEffect} from 'react';
 import styles from './Profile.module.css';
 import {useDispatch, useSelector} from 'react-redux';
 import {AppStateType} from '../../store/store';
-import {LoginResponseType} from '../../utils/api';
+import {LoginResponseType} from '../../utils/authApi';
 
 type PropsType = {};
 

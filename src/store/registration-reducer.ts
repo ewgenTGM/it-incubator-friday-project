@@ -1,4 +1,4 @@
-import {api} from "../utils/api";
+import {authApi} from "../utils/authApi";
 import {AppThunk} from './store';
 
 enum REGISTRATION_ACTION_TYPE {
@@ -50,7 +50,7 @@ export const registerTC = (email: string, password: string): AppThunk => async d
     dispatch(setLoadingAC(true))
     dispatch(setErrorAC(null))
     try {
-        const register = await api.register(email, password)
+        const register = await authApi.register(email, password)
         dispatch(setIsRegisterSuccessAC(true))
     } catch (e) {
         dispatch(setErrorAC(e.response ? e.response.data.error : e.message))

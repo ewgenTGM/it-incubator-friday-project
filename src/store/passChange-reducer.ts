@@ -1,4 +1,4 @@
-import {api} from '../utils/api';
+import {authApi} from '../utils/authApi';
 import {AppThunk} from './store';
 
 enum PASS_CHANGE_ACTION_TYPE {
@@ -50,7 +50,7 @@ export const changePassTC = (newPassword: string, token: string): AppThunk => as
   dispatch(setLoadingAC(true));
   dispatch(setErrorAC(null));
   try {
-    const changePassResponse = await api.setNewPassword(newPassword, token);
+    const changePassResponse = await authApi.setNewPassword(newPassword, token);
     dispatch(setIsChangedPass(true));
   } catch (e) {
     dispatch(setErrorAC(e.response ? e.response.data.error : e.message));

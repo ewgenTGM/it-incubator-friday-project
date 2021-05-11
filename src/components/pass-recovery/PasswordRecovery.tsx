@@ -1,6 +1,6 @@
 import React, {useState} from 'react';
 import styles from './PasswordRecovery.module.css';
-import {api, InfoResponseType} from '../../utils/api';
+import {authApi, InfoResponseType} from '../../utils/authApi';
 import * as buffer from 'buffer';
 import {emailValidator} from '../../utils/validators/email-validator';
 import {NavLink} from 'react-router-dom';

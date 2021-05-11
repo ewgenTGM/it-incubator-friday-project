@@ -35,6 +35,14 @@ export function Navbar() {
         </li>
         <li>
           <NavLink
+            to={PATH.CARDS}
+            activeClassName={styles.linkActive}>
+            Cards
+          </NavLink>
+        </li>
+
+        <li>
+          <NavLink
             to={PATH.TEST}
             activeClassName={styles.linkActive}>
             Test

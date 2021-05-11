@@ -8,6 +8,7 @@ import thunk, {ThunkAction} from 'redux-thunk';
 import {appReducer, AppReducerActionsType} from './app-reducer';
 import {passChangeReducer, PassChangeReducerActionsType} from './passChange-reducer';
 import {passRecoveryReducer, PassRecoveryReducerActionsType} from './pass-recovery-reducer';
+import {cardPacksReducer, CardPacksReducerActionsType} from './card-packs-reducer';
 
 const rootReducer = combineReducers({
   test: testReducer,
@@ -16,7 +17,8 @@ const rootReducer = combineReducers({
   login: loginReducer,
   appStatus: appReducer,
   passChange: passChangeReducer,
-  passRecovery: passRecoveryReducer
+  passRecovery: passRecoveryReducer,
+  cardPacks: cardPacksReducer
 });
 
 export type AppStateType = ReturnType<typeof rootReducer>;
@@ -29,7 +31,7 @@ type AppActionsType =
   AppReducerActionsType
   | LoginReducerActionsType
   | PassChangeReducerActionsType
-  | RegistrationReducerActionsType | PassRecoveryReducerActionsType;
+  | RegistrationReducerActionsType | PassRecoveryReducerActionsType | CardPacksReducerActionsType;
 
 export type AppThunk<ReturnType = void> = ThunkAction<ReturnType,
   AppStateType,

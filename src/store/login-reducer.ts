@@ -1,4 +1,4 @@
-import {api} from '../utils/api';
+import {authApi} from '../utils/authApi';
 import {setAuthDataAC, setIsAuthAC} from './app-reducer';
 import {AppThunk} from './store';
 
@@ -25,7 +25,7 @@ export const loginTC = (email: string, password: string, remember: boolean): App
   dispatch(setErrorAC(null));
   dispatch(setLoadingAC(true));
   try {
-    const res = await api.login(email, password, remember);
+    const res = await authApi.login(email, password, remember);
     dispatch(setAuthDataAC(res));
     dispatch(setIsAuthAC(true));
   } catch (e) {
@@ -39,7 +39,7 @@ export const logoutTC = (): AppThunk => async dispatch => {
   dispatch(setLoadingAC(true));
   dispatch(setErrorAC(null));
   try {
-    await api.logout();
+    await authApi.logout();
     dispatch(setAuthDataAC({}));
     dispatch(setIsAuthAC(false));
   } catch (e) {

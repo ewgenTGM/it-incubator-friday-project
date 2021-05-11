@@ -1,4 +1,4 @@
-import {api, LoginResponseType} from '../utils/api';
+import {authApi, LoginResponseType} from '../utils/authApi';
 import {AppThunk} from './store';
 
 enum ACTION_TYPE {
@@ -30,7 +30,7 @@ export const setAuthDataAC = (authData: LoginResponseType | {}) => {
 // Thunk creators
 export const AppInitializeTC = (): AppThunk => async dispatch => {
   try {
-    const response = await api.me();
+    const response = await authApi.me();
     dispatch(setAuthDataAC(response));
     dispatch(setIsAuthAC(true));
   } catch (e) {
