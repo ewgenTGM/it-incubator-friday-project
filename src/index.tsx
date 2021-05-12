@@ -5,6 +5,7 @@ import App from './components/App';
 import {Provider} from 'react-redux';
 import {store} from './store/store';
 import {HashRouter} from 'react-router-dom';
+import 'antd/dist/antd.css';
 
 ReactDOM.render(
   <React.StrictMode>

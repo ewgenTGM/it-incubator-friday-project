@@ -1,4 +1,4 @@
-import React, {useEffect, useState} from 'react';
+import React, {useState} from 'react';
 import styles from './Login.module.css';
 import {useDispatch, useSelector} from 'react-redux';
 import {LoginStateType, loginTC} from '../../store/login-reducer';

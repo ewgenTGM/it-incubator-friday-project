@@ -5,6 +5,7 @@ import {AppStateType} from '../../store/store';
 import {CardPacksStateType, setCardPacksTC} from '../../store/card-packs-reducer';
 import {Link} from 'react-router-dom';
 import {Spinner} from '../spinner/Spinner';
+import {Pagination, Button} from 'antd';
 
 type PropsType = {};
 
@@ -14,9 +15,14 @@ export const CardPacks: React.FC<PropsType> = props => {
   const dispatch = useDispatch();
 
   const [pageCount, setPageCount] = useState<number>(10);
+  const [page, setPage] = useState<number>(1);
 
   const setCardPacks = () => {
-    dispatch(setCardPacksTC(pageCount));
+    dispatch(setCardPacksTC());
+  };
+
+  const handleChange = (event: any, value: number) => {
+    setPage(value);
   };
 
   const tableRows: Array<JSX.Element> = cardPacksStatus.cardPacks.map((cp, index) => {
@@ -32,9 +38,11 @@ export const CardPacks: React.FC<PropsType> = props => {
         <td className={styles.tableCell}>{cp.shots}</td>
         <td className={styles.tableCell}>
           <Link to={`/cards/${cp._id}`}>
-            <button>Просмотр</button>
+            <Button type={'link'}>Просмотр</Button>
           </Link>
-          <button>Удалить</button>
+          <Button
+            type={'link'}
+            danger>Удалить</Button>
         </td>
       </tr>
     );
@@ -57,21 +65,6 @@ export const CardPacks: React.FC<PropsType> = props => {
 
   return (
     <div>
-      <select
-        value={pageCount}
-        onChange={e => setPageCount(parseInt(e.currentTarget.value))}>
-        <option value={5}>5</option>
-        <option value={10}>10</option>
-        <option value={15}>15</option>
-        <option value={20}>20</option>
-        <option value={30}>30</option>
-        <option value={40}>40</option>
-      </select>
-      <button
-        onClick={setCardPacks}
-        disabled={cardPacksStatus.loading}>
-        Получить колоды
-      </button>
       {cardPacksStatus.loading ? <Spinner/> :
         <>
           <div>
@@ -83,5 +76,4 @@ export const CardPacks: React.FC<PropsType> = props => {
         </>}
     </div>
   );
-}
-;
+};

@@ -26,9 +26,9 @@
 }
 
 .tableBody tr:nth-child(even) {
-    background-color: #dedede;
+    background-color: #ececec;
 }
 
 .tableBody tr:nth-child(odd) {
-    background-color: #c9c9c9;
+    background-color: #e5e5e5;
 }
