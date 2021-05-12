@@ -6,6 +6,7 @@ import commonStyles from '../common/commonStyle.module.css';
 import {useDispatch, useSelector} from 'react-redux';
 import {AppStateType} from '../../store/store';
 import {LoginStateType, logoutTC} from '../../store/login-reducer';
+import {Button} from 'antd';
 
 export function Navbar() {
 
@@ -21,10 +22,12 @@ export function Navbar() {
     <div className={commonStyles.container}>
       <ul>
         <li>
-          <button
+          <Button
+            type={'link'}
             onClick={logout}
+            loading={loginStatus.loading}
             disabled={loginStatus.loading}>Logout
-          </button>
+          </Button>
         </li>
         <li>
           <NavLink

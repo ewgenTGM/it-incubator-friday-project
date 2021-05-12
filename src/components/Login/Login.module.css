@@ -3,7 +3,7 @@
     display: flex;
     gap: 25px;
     flex-direction: column;
-    max-width: 500px;
+    min-width: 320px;
     width: 100%;
 }
 
@@ -38,9 +38,7 @@
 
 .button {
     align-self: center;
-    padding: 5px;
-    border-radius: 3px;
-    border: 1px solid gray;
+    width: 150px;
 }
 
 .error {

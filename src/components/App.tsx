@@ -6,6 +6,7 @@ import {useDispatch, useSelector} from 'react-redux';
 import {AppStateType} from '../store/store';
 import {AppInitializeTC} from '../store/app-reducer';
 import {Spinner} from './spinner/Spinner';
+import {Spin} from 'antd';
 
 function App() {
 
@@ -25,11 +26,10 @@ function App() {
       ? <>
         {isAuth && <Navbar/>}
         <div className={commonStyles.container}>
-          <h1 style={{textAlign: 'center'}}>This is mega super friday project</h1>
           <Routes/>
         </div>
       </>
-      : <Spinner/>
+      : <Spin size={'large'}/>
   );
 }
 

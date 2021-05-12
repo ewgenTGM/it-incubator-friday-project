@@ -1,12 +1,21 @@
 import React from 'react';
-import {NavLink} from 'react-router-dom';
+import {NavLink, Redirect} from 'react-router-dom';
 import {Login} from '../components/Login/Login';
 import styles from './LoginPage.module.css';
 import {PATH} from '../routes/Routes';
+import {useSelector} from 'react-redux';
+import {AppStateType} from '../store/store';
 
 type PropsType = {};
 
 export const LoginPage: React.FC<PropsType> = props => {
+
+  const isAuth = useSelector<AppStateType, boolean>(state => state.appStatus.isAuth);
+
+  if (isAuth) {
+    return <Redirect to={'/profile'}/>;
+  }
+
   return (
     <div className={styles.loginPage}>
       <h2 className={styles.h2}>Выполните вход в наше суперское приложение</h2>

@@ -29,8 +29,8 @@ const initialState: CardPacksStateType = {
   cardPacksTotalCount: 0,
   maxCardsCount: 0,
   minCardsCount: 0,
-  pageCount: 0,
-  page: 0
+  pageCount: 10,
+  page: 1
 };
 
 export const cardPacksReducer = (state = initialState, action: AppActionsType): CardPacksStateType => {
@@ -85,13 +85,13 @@ const setLoadingAC = (loading: boolean) => {
   return {type: CARD_PACKS_ACTION_TYPE.SET_LOADING as const, payload: {loading}};
 };
 
-export const setCardPacksTC = (): AppThunk => async dispatch => {
+export const setCardPacksTC = (pageCount: number, page: number): AppThunk => async dispatch => {
   dispatch(setLoadingAC(true));
   dispatch(setErrorAC(null));
   dispatch(setCardPacks([]));
 
   try {
-    const response = await cardPacksApi.getCardPacks();
+    const response = await cardPacksApi.getCardPacks(pageCount, page);
     dispatch(setCardPacks(response.data.cardPacks));
     dispatch(setCardPacksTotalCount(response.data.cardPacksTotalCount));
 
