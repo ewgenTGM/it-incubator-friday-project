@@ -1,5 +1,6 @@
 import {authApi} from "../utils/authApi";
-import {AppThunk} from './store';
+import {AppActionsType, AppThunk} from './store';
+import {APP_ACTION_TYPE} from './app-reducer';
 
 enum REGISTRATION_ACTION_TYPE {
     SET_ERROR = 'REGISTRATION/SET_ERROR',
@@ -19,7 +20,7 @@ const initialState: InitialStateType = {
     isRegisterSuccess: false
 };
 
-export const registrationReducer = (state = initialState, action: RegistrationReducerActionsType): InitialStateType => {
+export const registrationReducer = (state = initialState, action: AppActionsType): InitialStateType => {
     switch (action.type) {
         case REGISTRATION_ACTION_TYPE.SET_ERROR:
         case REGISTRATION_ACTION_TYPE.SET_LOADING:
@@ -28,6 +29,9 @@ export const registrationReducer = (state = initialState, action: RegistrationRe
                 ...state,
                 ...action.payload
             }
+        case APP_ACTION_TYPE.CLEAR_STORE: {
+            return initialState;
+        }
         default:
             return state;
     }

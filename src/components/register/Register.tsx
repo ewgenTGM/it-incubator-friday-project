@@ -6,6 +6,7 @@ import {AppStateType} from '../../store/store';
 import {emailValidator} from '../../utils/validators/email-validator';
 import {passwordValidator} from '../../utils/validators/password-validator';
 import {Redirect} from 'react-router-dom';
+import {Spinner} from '../spinner/Spinner';
 
 export const Register: React.VFC = () => {
 
@@ -56,7 +57,7 @@ export const Register: React.VFC = () => {
             {!passwordValidator(password) && <span style={{color: 'red'}}>Пароль должен содержать более 6 символов</span>}
           </div>
           :
-          <span>Ждите отстоя пива...</span>
+          <Spinner/>
         }
       </div>
     </div>

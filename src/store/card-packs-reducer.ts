@@ -1,5 +1,6 @@
-import {AppThunk} from './store';
+import {AppActionsType, AppThunk} from './store';
 import {CardPackType, cardsApi} from '../utils/cardsApi';
+import {APP_ACTION_TYPE} from './app-reducer';
 
 export enum CARD_PACKS_ACTION_TYPE {
   SET_ERROR = 'CARD_PACKS/SET_ERROR',
@@ -29,7 +30,7 @@ const initialState: CardPacksStateType = {
   page: 0
 };
 
-export const cardPacksReducer = (state = initialState, action: CardPacksReducerActionsType): CardPacksStateType => {
+export const cardPacksReducer = (state = initialState, action: AppActionsType): CardPacksStateType => {
   switch (action.type) {
     case CARD_PACKS_ACTION_TYPE.SET_ERROR:
     case CARD_PACKS_ACTION_TYPE.SET_LOADING:
@@ -38,6 +39,9 @@ export const cardPacksReducer = (state = initialState, action: CardPacksReducerA
         ...state,
         ...action.payload
       };
+    case APP_ACTION_TYPE.CLEAR_STORE:
+      return initialState
+
     default:
       return state;
   }
@@ -57,12 +61,12 @@ const setLoadingAC = (loading: boolean) => {
   return {type: CARD_PACKS_ACTION_TYPE.SET_LOADING as const, payload: {loading}};
 };
 
-export const setCardPacksTC = (): AppThunk => async dispatch => {
+export const setCardPacksTC = (pageCount: number = 10): AppThunk => async dispatch => {
   dispatch(setLoadingAC(true));
   dispatch(setErrorAC(null));
   dispatch(setCardPacks([]));
   try {
-    const response = await cardsApi.getCardPacks();
+    const response = await cardsApi.getCardPacks(pageCount);
     dispatch(setCardPacks(response.data.cardPacks));
   } catch (e) {
     dispatch(setErrorAC(e.response ? e.response.data.error : e.message));

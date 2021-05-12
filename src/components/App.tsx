@@ -5,6 +5,7 @@ import commonStyles from '../components/common/commonStyle.module.css';
 import {useDispatch, useSelector} from 'react-redux';
 import {AppStateType} from '../store/store';
 import {AppInitializeTC} from '../store/app-reducer';
+import {Spinner} from './spinner/Spinner';
 
 function App() {
 
@@ -13,8 +14,11 @@ function App() {
   const isAuth = useSelector<AppStateType, boolean>(state => state.appStatus.isAuth);
 
   useEffect(() => {
-    dispatch(AppInitializeTC());
-  }, [dispatch]);
+    if (!isInitialized) {
+      dispatch(AppInitializeTC());
+    }
+    return;
+  });
 
   return (
     isInitialized
@@ -25,7 +29,7 @@ function App() {
           <Routes/>
         </div>
       </>
-      : <span>Ждите отстоя пива...</span>
+      : <Spinner/>
   );
 }
 

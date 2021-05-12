@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, {useEffect, useState} from 'react';
 import styles from './Login.module.css';
 import {useDispatch, useSelector} from 'react-redux';
 import {LoginStateType, loginTC} from '../../store/login-reducer';
@@ -6,6 +6,7 @@ import {AppStateType} from '../../store/store';
 import {Redirect} from 'react-router-dom';
 import {emailValidator} from '../../utils/validators/email-validator';
 import {passwordValidator} from '../../utils/validators/password-validator';
+import {Spinner} from '../spinner/Spinner';
 
 export const Login: React.VFC = () => {
     const [email, setEmail] = useState<string>('');
@@ -77,7 +78,7 @@ export const Login: React.VFC = () => {
     return (
       <>
         {loginStatus.loading
-          ? <span>Ждите отстоя пива...</span>
+          ? <Spinner/>
           : form}
         {loginStatus.error && errorBlock}
       </>

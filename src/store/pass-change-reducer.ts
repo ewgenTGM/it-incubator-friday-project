@@ -1,5 +1,6 @@
 import {authApi} from '../utils/authApi';
-import {AppThunk} from './store';
+import {AppActionsType, AppThunk} from './store';
+import {APP_ACTION_TYPE} from './app-reducer';
 
 enum PASS_CHANGE_ACTION_TYPE {
   SET_ERROR = 'PASS_CHANGE/SET_ERROR',
@@ -19,7 +20,7 @@ const initialState: PassChangeStateType = {
   isChangedPass: false
 };
 
-export const passChangeReducer = (state = initialState, action: PassChangeReducerActionsType): PassChangeStateType => {
+export const passChangeReducer = (state = initialState, action: AppActionsType): PassChangeStateType => {
   switch (action.type) {
     case PASS_CHANGE_ACTION_TYPE.SET_ERROR:
     case PASS_CHANGE_ACTION_TYPE.SET_LOADING:
@@ -28,6 +29,9 @@ export const passChangeReducer = (state = initialState, action: PassChangeReduce
         ...state,
         ...action.payload
       };
+    case APP_ACTION_TYPE.CLEAR_STORE: {
+      return initialState;
+    }
     default:
       return state;
   }

@@ -1,29 +1,35 @@
 import {authApi, LoginResponseType} from '../utils/authApi';
-import {AppThunk} from './store';
+import {AppActionsType, AppThunk} from './store';
 
-enum ACTION_TYPE {
+export enum APP_ACTION_TYPE {
   SET_IS_INITIALIZED = 'APP/SET_IS_INITIALIZED',
   SET_IS_AUTH = 'APP/SET_IS_AUTH',
   SET_AUTH_DATA = 'APP/SET_AUTH_DATA',
-  SET_ERROR = 'APP/SET_ERROR'
+  SET_ERROR = 'APP/SET_ERROR',
+  CLEAR_STORE = 'APP/CLEAR_STORE'
 }
 
 // Action creators
 export const setIsInitializedAC = (isInitialized: boolean) => {
-  return {type: ACTION_TYPE.SET_IS_INITIALIZED as const, payload: {isInitialized}};
+  return {type: APP_ACTION_TYPE.SET_IS_INITIALIZED as const, payload: {isInitialized}};
 };
 
 export const setIsAuthAC = (isAuth: boolean) => {
   return {
-    type: ACTION_TYPE.SET_IS_AUTH as const, payload: {isAuth}
+    type: APP_ACTION_TYPE.SET_IS_AUTH as const, payload: {isAuth}
   };
 };
 
-export const setError = (error: string | null) => {
-  return {type: ACTION_TYPE.SET_ERROR as const, payload: {error}};
+const setError = (error: string | null) => {
+  return {type: APP_ACTION_TYPE.SET_ERROR as const, payload: {error}};
 };
+
+export const clearStoreAC = () => {
+  return {type: APP_ACTION_TYPE.CLEAR_STORE as const};
+};
+
 export const setAuthDataAC = (authData: LoginResponseType | {}) => {
-  return {type: ACTION_TYPE.SET_AUTH_DATA as const, payload: {authData}};
+  return {type: APP_ACTION_TYPE.SET_AUTH_DATA as const, payload: {authData}};
 };
 // ------------------
 
@@ -46,6 +52,7 @@ export type AppReducerActionsType =
   | ReturnType<typeof setIsAuthAC>
   | ReturnType<typeof setError>
   | ReturnType<typeof setAuthDataAC>
+  | ReturnType<typeof clearStoreAC>
 
 type StateType = typeof initialState;
 
@@ -56,12 +63,16 @@ const initialState = {
   error: null as string | null
 };
 
-export const appReducer = (state: StateType = initialState, action: AppReducerActionsType): StateType => {
+export const appReducer = (state: StateType = initialState, action: AppActionsType): StateType => {
   switch (action.type) {
-    case ACTION_TYPE.SET_IS_INITIALIZED:
-    case ACTION_TYPE.SET_IS_AUTH:
-    case ACTION_TYPE.SET_AUTH_DATA:
+    case APP_ACTION_TYPE.SET_IS_INITIALIZED:
+    case APP_ACTION_TYPE.SET_IS_AUTH:
+    case APP_ACTION_TYPE.SET_AUTH_DATA:
+    case APP_ACTION_TYPE.SET_ERROR:
       return {...state, ...action.payload};
+    case APP_ACTION_TYPE.CLEAR_STORE: {
+      return initialState;
+    }
 
     default:
       return state;

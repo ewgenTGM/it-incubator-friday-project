@@ -7,7 +7,7 @@ import {NavLink} from 'react-router-dom';
 import {PATH} from '../../routes/Routes';
 import {useDispatch, useSelector} from 'react-redux';
 import {AppStateType} from '../../store/store';
-import {PassChangeStateType} from '../../store/passChange-reducer';
+import {PassChangeStateType} from '../../store/pass-change-reducer';
 import {PassRecoveryStateType, passRecoveryTC} from '../../store/pass-recovery-reducer';
 
 type PropsType = {};

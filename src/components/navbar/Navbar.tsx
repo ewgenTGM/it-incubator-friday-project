@@ -35,9 +35,9 @@ export function Navbar() {
         </li>
         <li>
           <NavLink
-            to={PATH.CARDS}
+            to={PATH.CARD_PACKS}
             activeClassName={styles.linkActive}>
-            Cards
+            Card packs
           </NavLink>
         </li>
 

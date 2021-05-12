@@ -1,5 +1,6 @@
-import {AppThunk} from './store';
+import {AppActionsType, AppThunk} from './store';
 import {authApi} from '../utils/authApi';
+import {APP_ACTION_TYPE} from './app-reducer';
 
 export enum PASS_RECOVERY_ACTION_TYPE {
   SET_ERROR = 'PASS_RECOVERY/SET_ERROR',
@@ -19,7 +20,7 @@ const initialState: PassRecoveryStateType = {
   isEmailSend: false
 };
 
-export const passRecoveryReducer = (state = initialState, action: PassRecoveryReducerActionsType): PassRecoveryStateType => {
+export const passRecoveryReducer = (state = initialState, action: AppActionsType): PassRecoveryStateType => {
   switch (action.type) {
     case PASS_RECOVERY_ACTION_TYPE.SET_ERROR:
     case PASS_RECOVERY_ACTION_TYPE.SET_LOADING:
@@ -28,6 +29,9 @@ export const passRecoveryReducer = (state = initialState, action: PassRecoveryRe
         ...state,
         ...action.payload
       };
+    case APP_ACTION_TYPE.CLEAR_STORE: {
+      return initialState;
+    }
     default:
       return state;
   }

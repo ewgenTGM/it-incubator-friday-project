@@ -7,13 +7,15 @@ import {PassRecoveryPage} from '../Pages/PassRecoveryPage';
 import {TestPage} from '../Pages/TestPage';
 import {Page404} from '../Pages/Page404';
 import {SetNewPasswordPage} from '../Pages/SetNewPasswordPage';
+import {CardPacksPage} from '../Pages/CardPacksPage';
 import {CardsPage} from '../Pages/CardsPage';
 
 export enum PATH {
   LOGIN = '/login',
   REGISTER = '/register',
   PROFILE = '/profile',
-  CARDS = '/card',
+  CARD_PACKS = '/card-packs',
+  CARDS = '/cards',
   PAGE404 = '/404',
   PASS_RECOVERY = '/password-recovery',
   TEST = '/test',
@@ -47,13 +49,17 @@ export const Routes: React.VFC = () => {
           exact
           render={() => <PassRecoveryPage/>}/>
         <Route
-          path={PATH.CARDS}
+          path={PATH.CARD_PACKS}
           exact
-          render={() => <CardsPage/>}/>
+          render={() => <CardPacksPage/>}/>
         <Route
           path={PATH.SET_NEW_PASSWORD + '/:token'}
           exact
           render={() => <SetNewPasswordPage/>}/>
+        <Route
+          path={PATH.CARDS + '/:cardPackId'}
+          exact
+          render={() => <CardsPage/>}/>
         <Route
           path={PATH.TEST}
           exact

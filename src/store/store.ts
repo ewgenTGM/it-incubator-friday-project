@@ -6,7 +6,7 @@ import {loginReducer, LoginReducerActionsType} from './login-reducer';
 import {createStore} from 'redux';
 import thunk, {ThunkAction} from 'redux-thunk';
 import {appReducer, AppReducerActionsType} from './app-reducer';
-import {passChangeReducer, PassChangeReducerActionsType} from './passChange-reducer';
+import {passChangeReducer, PassChangeReducerActionsType} from './pass-change-reducer';
 import {passRecoveryReducer, PassRecoveryReducerActionsType} from './pass-recovery-reducer';
 import {cardPacksReducer, CardPacksReducerActionsType} from './card-packs-reducer';
 
@@ -27,7 +27,7 @@ export const store = createStore(rootReducer, applyMiddleware(thunk));
 
 // Все экшены нашего приложения, которые можно диспатчить
 
-type AppActionsType =
+export type AppActionsType =
   AppReducerActionsType
   | LoginReducerActionsType
   | PassChangeReducerActionsType

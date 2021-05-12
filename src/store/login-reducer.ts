@@ -1,6 +1,6 @@
 import {authApi} from '../utils/authApi';
-import {setAuthDataAC, setIsAuthAC} from './app-reducer';
-import {AppThunk} from './store';
+import {APP_ACTION_TYPE, clearStoreAC, setAuthDataAC, setIsAuthAC} from './app-reducer';
+import {AppActionsType, AppThunk} from './store';
 
 enum LOGIN_ACTION_TYPE {
   SET_ERROR = 'LOGIN/SET_ERROR',
@@ -40,8 +40,10 @@ export const logoutTC = (): AppThunk => async dispatch => {
   dispatch(setErrorAC(null));
   try {
     await authApi.logout();
-    dispatch(setAuthDataAC({}));
-    dispatch(setIsAuthAC(false));
+    //dispatch(setAuthDataAC({}));
+    //dispatch(setIsAuthAC(false));
+    dispatch(clearStoreAC());
+    //dispatch(AppInitializeTC());
   } catch (e) {
     dispatch(setErrorAC(e.response ? e.response.data.error : e.message));
   } finally {
@@ -63,13 +65,16 @@ const initialState: LoginStateType = {
 
 //---------------
 
-export const loginReducer = (state: LoginStateType = initialState, action: LoginReducerActionsType): LoginStateType => {
+export const loginReducer = (state: LoginStateType = initialState, action: AppActionsType): LoginStateType => {
   switch (action.type) {
     case LOGIN_ACTION_TYPE.SET_ERROR:
     case LOGIN_ACTION_TYPE.SET_LOADING:
       return {
         ...state, ...action.payload
       };
+    case APP_ACTION_TYPE.CLEAR_STORE: {
+      return initialState;
+    }
     default:
       return state;
   }
