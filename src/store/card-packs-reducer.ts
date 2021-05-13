@@ -85,13 +85,13 @@ const setLoadingAC = (loading: boolean) => {
   return {type: CARD_PACKS_ACTION_TYPE.SET_LOADING as const, payload: {loading}};
 };
 
-export const setCardPacksTC = (pageCount: number, page: number, user_id?: string): AppThunk => async dispatch => {
+export const setCardPacksTC = (pageCount: number, page: number, user_id?: string, packName?: string): AppThunk => async dispatch => {
   dispatch(setLoadingAC(true));
   dispatch(setErrorAC(null));
   dispatch(setCardPacks([]));
 
   try {
-    const response = await cardPacksApi.getCardPacks(pageCount, page, user_id);
+    const response = await cardPacksApi.getCardPacks(pageCount, page, user_id, packName);
     dispatch(setCardPacks(response.data.cardPacks));
     dispatch(setCardPacksTotalCount(response.data.cardPacksTotalCount));
 
@@ -108,8 +108,8 @@ export const deleteCardPackTC = (cardPackId: string): AppThunk => async dispatch
   dispatch(setErrorAC(null));
   try {
     await cardPacksApi.deleteCardPack(cardPackId);
-    dispatch(setPageCount(initialState.pageCount));
-    dispatch(setPage(initialState.page));
+    // dispatch(setPageCount(initialState.pageCount));
+    // dispatch(setPage(initialState.page));
     dispatch(setCardPacksTC(initialState.pageCount, initialState.page));
   } catch (e) {
     dispatch(setErrorAC(e.response ? e.response.data.error : e.message));

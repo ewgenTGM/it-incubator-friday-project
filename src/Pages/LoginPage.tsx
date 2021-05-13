@@ -1,6 +1,6 @@
 import React from 'react';
 import {NavLink, Redirect} from 'react-router-dom';
-import {Login} from '../components/Login/Login';
+import {Login} from '../components/login/Login';
 import styles from './LoginPage.module.css';
 import commonStyles from '../components/common/commonStyle.module.css';
 import {PATH} from '../routes/Routes';

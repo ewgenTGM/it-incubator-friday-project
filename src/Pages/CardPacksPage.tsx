@@ -4,9 +4,10 @@ import styles from './CardPacksPage.module.css';
 import {Redirect} from 'react-router-dom';
 import {AppStateType} from '../store/store';
 import {CardPacks} from '../components/card-packs/CardPacks';
-import {Pagination, Spin, Switch} from 'antd';
+import {Alert, Pagination, Spin, Switch} from 'antd';
 import {CardPacksStateType, setCardPacksTC, setPage, setPageCount} from '../store/card-packs-reducer';
 import {CheckOutlined, CloseOutlined} from '@ant-design/icons';
+import {SearchPanel} from '../components/search-panel/SearchPanel';
 
 type PropsType = {};
 
@@ -44,35 +45,54 @@ export const CardPacksPage: React.FC<PropsType> = props => {
     dispatch(setPageCount(size));
   };
 
+  const onSearch = (searchText: string) => {
+    dispatch(setCardPacksTC(pageCount, page, onlyMy ? myId : undefined, searchText));
+  };
+
   return (
-    <div>
+    <>
       <h2>Card Packs Page</h2>
-      <div className={styles.options}><Pagination
-        onShowSizeChange={onShowSizeChangeHandler}
-        onChange={onChangeHandler}
-        defaultCurrent={1}
-        current={page}
-        pageSize={pageCount}
-        disabled={loading}
-        showQuickJumper
-        total={cardPacksTotalCount}/>
-        <label
-          htmlFor="rememberMe"
-        >Только мои колоды</label>
-        <Switch
+      <div className={styles.optionsBar}>
+        <div className={styles.options}><Pagination
+          onShowSizeChange={onShowSizeChangeHandler}
+          onChange={onChangeHandler}
+          defaultCurrent={1}
+          current={page}
+          pageSize={pageCount}
           disabled={loading}
-          checkedChildren={<CheckOutlined/>}
-          unCheckedChildren={<CloseOutlined/>}
-          defaultChecked={false}
-          checked={onlyMy}
-          onChange={(checked) => setOnlyMy(checked)}
-        /></div>
-      <div style={{marginTop: '25px', textAlign: 'center'}}>{loading
-        ? <Spin
-          size={'large'}
-          tip={'Loading...'}/>
-        : <CardPacks cardPacks={cardPacks}/> || error
-      }</div>
-    </div>
+          showQuickJumper
+          total={cardPacksTotalCount}/>
+          <label
+            htmlFor="rememberMe"
+          >Только мои колоды</label>
+          <Switch
+            disabled={loading}
+            checkedChildren={<CheckOutlined/>}
+            unCheckedChildren={<CloseOutlined/>}
+            defaultChecked={false}
+            checked={onlyMy}
+            onChange={(checked) => setOnlyMy(checked)}
+          />
+        </div>
+        <div className={styles.searchBar}>
+          <SearchPanel
+            disabled={loading}
+            inputPlaceholder={'Введите название колоды'}
+            onSearch={onSearch}/>
+        </div>
+      </div>
+      <div style={{marginTop: '25px', textAlign: 'center'}}>
+        {error && <Alert
+            message={error}
+            type="error"
+            closable
+        />}
+        {loading
+          ? <Spin
+            size={'large'}
+            tip={'Loading...'}/>
+          : <CardPacks cardPacks={cardPacks}/>
+        }</div>
+    </>
   );
 };
