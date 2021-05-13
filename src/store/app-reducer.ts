@@ -54,16 +54,21 @@ export type AppReducerActionsType =
   | ReturnType<typeof setAuthDataAC>
   | ReturnType<typeof clearStoreAC>
 
-type StateType = typeof initialState;
-
-const initialState = {
-  isInitialized: false,
-  isAuth: false,
-  authData: {} as {} | LoginResponseType,
-  error: null as string | null
+type StateType = {
+  isInitialized: boolean
+  isAuth: boolean
+  authData: Partial<LoginResponseType>,
+  error: string | null
 };
 
-export const appReducer = (state: StateType = initialState, action: AppActionsType): StateType => {
+const initialState: StateType = {
+  isInitialized: false,
+  isAuth: false,
+  authData: {},
+  error: null
+};
+
+export const appReducer = (state = initialState, action: AppActionsType): StateType => {
   switch (action.type) {
     case APP_ACTION_TYPE.SET_IS_INITIALIZED:
     case APP_ACTION_TYPE.SET_IS_AUTH:

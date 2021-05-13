@@ -48,11 +48,11 @@ export type LoginResponseType = {
   email: string;
   name: string;
   avatar?: string;
-  publicCardPacksCount: number; // количество колод
-  created: Date;
-  updated: Date;
+  publicCardPacksCount: number;
+  created: string;
+  updated: string;
   isAdmin: boolean;
-  verified: boolean; // подтвердил ли почту
+  verified: boolean;
   rememberMe: boolean;
   error?: string;
 }

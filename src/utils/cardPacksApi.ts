@@ -6,8 +6,12 @@ const REMOTE_URL = 'https://neko-back.herokuapp.com/2.0';
 const instance = axios.create({baseURL: LOCAL_URL, withCredentials: true});
 
 export const cardPacksApi = {
-  getCardPacks(pageCount: number = 10, page: number = 0) {
-    return instance.get<CardPacksResponseType>(`/cards/pack?pageCount=${pageCount}&page=${page}`);
+  getCardPacks(pageCount: number = 10, page: number = 0, userId?: string) {
+    return instance.get<CardPacksResponseType>(`/cards/pack?pageCount=${pageCount}&page=${page}${userId ? `&user_id=${userId}` : ''}`);
+  }
+,
+  deleteCardPack(cardPackId: string) {
+    return instance.delete('/cards/pack?id=' + cardPackId);
   }
 };
 
@@ -23,6 +27,7 @@ export type CardPacksResponseType = {
 export type CardPackType = {
   _id: string
   user_id: string
+  user_name: string
   name: string
   path: string
   cardsCount: number

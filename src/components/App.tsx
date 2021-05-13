@@ -5,7 +5,6 @@ import commonStyles from '../components/common/commonStyle.module.css';
 import {useDispatch, useSelector} from 'react-redux';
 import {AppStateType} from '../store/store';
 import {AppInitializeTC} from '../store/app-reducer';
-import {Spinner} from './spinner/Spinner';
 import {Spin} from 'antd';
 
 function App() {
@@ -29,7 +28,7 @@ function App() {
           <Routes/>
         </div>
       </>
-      : <Spin size={'large'}/>
+      : <div className={commonStyles.fullscreen}><Spin size={'large'}/></div>
   );
 }
 
