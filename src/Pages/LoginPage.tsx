@@ -14,7 +14,7 @@ export const LoginPage: React.FC<PropsType> = props => {
   const isAuth = useSelector<AppStateType, boolean>(state => state.appStatus.isAuth);
 
   if (isAuth) {
-    return <Redirect to={'/profile'}/>;
+    return <Redirect to={PATH.PROFILE}/>;
   }
 
   return (

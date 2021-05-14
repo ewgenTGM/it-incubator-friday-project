@@ -6,6 +6,7 @@ import {changePassTC, PassChangeStateType} from '../../store/pass-change-reducer
 import {AppStateType} from '../../store/store';
 import {matchPasswordValidator, passwordValidator} from '../../utils/validators/password-validator';
 import {Spinner} from '../spinner/Spinner';
+import {PATH} from '../../routes/Routes';
 
 type PropsType = {};
 
@@ -30,7 +31,7 @@ export const SetNewPass: React.FC<PropsType> = props => {
   };
 
   if (statePassReducer.isChangedPass) {
-    return <Redirect to={'/login'}/>;
+    return <Redirect to={PATH.LOGIN}/>;
   }
 
   return (

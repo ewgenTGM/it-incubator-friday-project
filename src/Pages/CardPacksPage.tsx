@@ -15,6 +15,7 @@ import {
 } from '../store/card-packs-reducer';
 import {CheckOutlined, CloseOutlined} from '@ant-design/icons';
 import {FieldWithButton} from '../components/field-with-button/FieldWithButton';
+import {PATH} from '../routes/Routes';
 
 type PropsType = {};
 
@@ -40,7 +41,7 @@ export const CardPacksPage: React.FC<PropsType> = props => {
   }, [pageCount, page, onlyMyPacks, myId, dispatch]);
 
   if (!isAuth) {
-    return <Redirect to={'/login'}/>;
+    return <Redirect to={PATH.LOGIN}/>;
   }
   const onChangeHandler = (page: number) => {
     dispatch(setPage(page));

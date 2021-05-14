@@ -7,6 +7,7 @@ import {emailValidator} from '../../utils/validators/email-validator';
 import {passwordValidator} from '../../utils/validators/password-validator';
 import {Redirect} from 'react-router-dom';
 import {Spinner} from '../spinner/Spinner';
+import {PATH} from '../../routes/Routes';
 
 export const Register: React.VFC = () => {
 
@@ -30,7 +31,7 @@ export const Register: React.VFC = () => {
   };
 
   if (registerState.isRegisterSuccess) {
-    return <Redirect to={'/login'}/>;
+    return <Redirect to={PATH.LOGIN}/>;
   }
 
   return (
