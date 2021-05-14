@@ -3,11 +3,11 @@ import axios from 'axios';
 const LOCAL_URL = 'http://localhost:7542/2.0/';
 const REMOTE_URL = 'https://neko-back.herokuapp.com/2.0';
 
-const instance = axios.create({baseURL: LOCAL_URL, withCredentials: true});
+const instance = axios.create({baseURL: REMOTE_URL, withCredentials: true});
 
 export const cardPacksApi = {
-  getCardPacks(pageCount: number = 10, page: number = 0, userId?: string, packName?: string) {
-    return instance.get<CardPacksResponseType>(`/cards/pack?pageCount=${pageCount}&page=${page}${userId ? `&user_id=${userId}` : ''}${packName ? `&packName=${packName}` : ''}`);
+  getCardPacks(options: Partial<GetCardPacksRequestType>) {
+    return instance.get<CardPacksResponseType>('/cards/pack', {params: {...options}});
   },
 
   deleteCardPack(cardPackId: string) {
@@ -52,4 +52,14 @@ export type AddCardPackRequestType = {
   deckCover: string
   private: boolean
   type: 'pack' | 'folder'
+}
+
+export type GetCardPacksRequestType = {
+  packName: string
+  min: number
+  max: number
+  sortPacks: string
+  page: number
+  pageCount: number
+  user_id: string
 }

@@ -101,7 +101,7 @@ export const setCardPacksTC = (pageCount: number, page: number, user_id?: string
   dispatch(setCardPacks([]));
 
   try {
-    const response = await cardPacksApi.getCardPacks(pageCount, page, user_id, packName);
+    const response = await cardPacksApi.getCardPacks({pageCount, page, user_id, packName});
     dispatch(setCardPacks(response.data.cardPacks));
     dispatch(setCardPacksTotalCount(response.data.cardPacksTotalCount));
 
