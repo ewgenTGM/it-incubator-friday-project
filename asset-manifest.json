@@ -1,6 +1,6 @@
 {
   "files": {
-    "main.css": "/it-incubator-friday-project/static/css/main.e1890cfc.chunk.css",
+    "main.css": "/it-incubator-friday-project/static/css/main.f94c45f1.chunk.css",
     "main.js": "/it-incubator-friday-project/static/js/main.f8c7ec9d.chunk.js",
     "main.js.map": "/it-incubator-friday-project/static/js/main.f8c7ec9d.chunk.js.map",
     "runtime-main.js": "/it-incubator-friday-project/static/js/runtime-main.2ace3279.js",
@@ -10,14 +10,14 @@
     "static/js/2.e77bb33b.chunk.js.map": "/it-incubator-friday-project/static/js/2.e77bb33b.chunk.js.map",
     "index.html": "/it-incubator-friday-project/index.html",
     "static/css/2.e4d41df7.chunk.css.map": "/it-incubator-friday-project/static/css/2.e4d41df7.chunk.css.map",
-    "static/css/main.e1890cfc.chunk.css.map": "/it-incubator-friday-project/static/css/main.e1890cfc.chunk.css.map",
+    "static/css/main.f94c45f1.chunk.css.map": "/it-incubator-friday-project/static/css/main.f94c45f1.chunk.css.map",
     "static/js/2.e77bb33b.chunk.js.LICENSE.txt": "/it-incubator-friday-project/static/js/2.e77bb33b.chunk.js.LICENSE.txt"
   },
   "entrypoints": [
     "static/js/runtime-main.2ace3279.js",
     "static/css/2.e4d41df7.chunk.css",
     "static/js/2.e77bb33b.chunk.js",
-    "static/css/main.e1890cfc.chunk.css",
+    "static/css/main.f94c45f1.chunk.css",
     "static/js/main.f8c7ec9d.chunk.js"
   ]
 }
