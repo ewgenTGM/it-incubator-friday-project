@@ -1,5 +1,5 @@
-import {AppActionsType, AppThunk} from './store';
-import {CardPackType, cardPacksApi} from '../utils/cardPacksApi';
+import {AppActionsType, AppThunk, store} from './store';
+import {CardPackType, cardPacksApi, AddCardPackRequestType} from '../utils/cardPacksApi';
 import {APP_ACTION_TYPE} from './app-reducer';
 
 export enum CARD_PACKS_ACTION_TYPE {
@@ -9,6 +9,7 @@ export enum CARD_PACKS_ACTION_TYPE {
   SET_PAGE_COUNT = 'CARD_PACKS/SET_PAGE_COUNT',
   SET_CARD_PACKS = 'CARD_PACKS/SET_CARD_PACKS',
   SET_CARD_PACKS_TOTAL_COUNT = 'CARD_PACKS/SET_CARD_PACKS_TOTAL_COUNT',
+  SET_ONLY_MY_PACKS = 'CARD_PACKS/SET_ONLY_MY_PACKS'
 }
 
 export type CardPacksStateType = {
@@ -20,6 +21,7 @@ export type CardPacksStateType = {
   minCardsCount: number
   page: number
   pageCount: number
+  onlyMyPacks: boolean
 }
 
 const initialState: CardPacksStateType = {
@@ -30,7 +32,8 @@ const initialState: CardPacksStateType = {
   maxCardsCount: 0,
   minCardsCount: 0,
   pageCount: 10,
-  page: 1
+  page: 1,
+  onlyMyPacks: false
 };
 
 export const cardPacksReducer = (state = initialState, action: AppActionsType): CardPacksStateType => {
@@ -41,6 +44,7 @@ export const cardPacksReducer = (state = initialState, action: AppActionsType): 
     case CARD_PACKS_ACTION_TYPE.SET_CARD_PACKS_TOTAL_COUNT:
     case CARD_PACKS_ACTION_TYPE.SET_PAGE:
     case CARD_PACKS_ACTION_TYPE.SET_PAGE_COUNT:
+    case CARD_PACKS_ACTION_TYPE.SET_ONLY_MY_PACKS:
       return {
         ...state,
         ...action.payload
@@ -77,6 +81,12 @@ export const setPageCount = (pageCount: number) => {
   };
 };
 
+export const setOnlyMyPacks = (onlyMyPacks: boolean) => {
+  return {
+    type: CARD_PACKS_ACTION_TYPE.SET_ONLY_MY_PACKS as const, payload: {onlyMyPacks}
+  };
+};
+
 const setErrorAC = (error: null | string) => {
   return {type: CARD_PACKS_ACTION_TYPE.SET_ERROR as const, payload: {error}};
 };
@@ -108,9 +118,22 @@ export const deleteCardPackTC = (cardPackId: string): AppThunk => async dispatch
   dispatch(setErrorAC(null));
   try {
     await cardPacksApi.deleteCardPack(cardPackId);
-    // dispatch(setPageCount(initialState.pageCount));
-    // dispatch(setPage(initialState.page));
-    dispatch(setCardPacksTC(initialState.pageCount, initialState.page));
+    dispatch(setPageCount(initialState.pageCount));
+    dispatch(setPage(initialState.page));
+  } catch (e) {
+    dispatch(setErrorAC(e.response ? e.response.data.error : e.message));
+  } finally {
+    dispatch(setLoadingAC(false));
+  }
+};
+
+export const addCardPackTC = (cardPack: Partial<AddCardPackRequestType>): AppThunk => async dispatch => {
+  dispatch(setLoadingAC(true));
+  dispatch(setErrorAC(null));
+  try {
+    await cardPacksApi.addCardPack(cardPack);
+    dispatch(setPageCount(initialState.pageCount));
+    dispatch(setPage(initialState.page));
   } catch (e) {
     dispatch(setErrorAC(e.response ? e.response.data.error : e.message));
   } finally {
@@ -125,3 +148,4 @@ export type CardPacksReducerActionsType =
   | ReturnType<typeof setPage>
   | ReturnType<typeof setPageCount>
   | ReturnType<typeof setCardPacksTotalCount>
+  | ReturnType<typeof setOnlyMyPacks>

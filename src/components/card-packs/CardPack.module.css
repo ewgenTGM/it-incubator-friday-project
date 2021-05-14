@@ -9,9 +9,9 @@
     padding: 15px;
     border: 1px solid #afafaf;
     border-radius: 5px;
-    box-shadow: /*3px 3px 10px #7b7b7b,*/ 2px 2px lightgray, 4px 4px darkgray, 6px 6px gray;
-;
+    box-shadow: 2px 2px lightgray, 4px 4px darkgray, 6px 6px gray;
     transition: .3s;
+    text-align: center;
 }
 
 .card:hover {

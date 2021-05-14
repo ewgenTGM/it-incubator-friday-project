@@ -12,6 +12,10 @@ export const cardPacksApi = {
 
   deleteCardPack(cardPackId: string) {
     return instance.delete('/cards/pack?id=' + cardPackId);
+  },
+
+  addCardPack(cardsPack: Partial<AddCardPackRequestType>) {
+    return instance.post('/cards/pack', {cardsPack: cardsPack});
   }
 };
 
@@ -38,4 +42,14 @@ export type CardPackType = {
   created: string
   updated: string
   __v: string
+}
+export type AddCardPackRequestType = {
+  name: string
+  path: string
+  grade: number
+  shots: number
+  rating: number
+  deckCover: string
+  private: boolean
+  type: 'pack' | 'folder'
 }

@@ -1,14 +1,15 @@
 import {Button, Input} from 'antd';
 import React, {ChangeEvent, useState} from 'react';
-import styles from './SearchPanel.module.css';
+import styles from './FieldWithButton.module.css';
 
 type PropsType = {
   inputPlaceholder?: string
+  buttonLabel?: string
   disabled?: boolean
-  onSearch: (searchText: string) => void
+  action: (searchText: string) => void
 };
 
-export const SearchPanel: React.FC<PropsType> = props => {
+export const FieldWithButton: React.FC<PropsType> = props => {
 
   const [text, setText] = useState<string>('');
 
@@ -17,7 +18,7 @@ export const SearchPanel: React.FC<PropsType> = props => {
   };
 
   const onSearch = () => {
-    props.onSearch(text);
+    props.action(text);
     setText('');
   };
 
@@ -31,7 +32,7 @@ export const SearchPanel: React.FC<PropsType> = props => {
         onChange={inputChangeHandler}/>
       <Button
         onClick={onSearch}
-        disabled={props.disabled}>Поиск</Button>
+        disabled={props.disabled}>{props.buttonLabel ?? 'Do it'}</Button>
     </div>
   );
 };
