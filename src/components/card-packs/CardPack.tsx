@@ -6,11 +6,12 @@ import {Link} from 'react-router-dom';
 
 type PropsType = {
   cardPack: CardPackType
+  isMyCardPack: boolean
   onDelete: () => void
 };
 
 export const CardPack: React.FC<PropsType> = props => {
-  const {cardPack, onDelete} = props;
+  const {cardPack, onDelete, isMyCardPack} = props;
 
   return (
     <div className={styles.card}>
@@ -38,8 +39,13 @@ export const CardPack: React.FC<PropsType> = props => {
         </div>
       </div>
       <div className={styles.actions}>
-        <Link to={`/cards/${cardPack._id}`}><Button className={styles.action}>View</Button></Link>
-        <Button className={styles.action}>Edit</Button>
+        <Link to={`/cards/${cardPack._id}`}><Button
+          className={styles.action}
+        >
+          View</Button></Link>
+        <Button
+          className={styles.action}
+          disabled={!isMyCardPack}>Edit</Button>
         <Popconfirm
           onConfirm={onDelete}
           title={'Точно удалить?'}
@@ -48,7 +54,8 @@ export const CardPack: React.FC<PropsType> = props => {
           placement={'top'}
           cancelButtonProps={{type: 'primary'}}
           okButtonProps={{danger: true}}>
-          <Button
+          < Button
+            disabled={!isMyCardPack}
             className={styles.action}
             danger>Remove
           </Button>

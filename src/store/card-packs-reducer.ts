@@ -113,13 +113,13 @@ export const setCardPacksTC = (pageCount: number, page: number, user_id?: string
   }
 };
 
-export const deleteCardPackTC = (cardPackId: string): AppThunk => async dispatch => {
+export const deleteCardPackTC = (cardPackId: string): AppThunk => async (dispatch, getState) => {
   dispatch(setLoadingAC(true));
   dispatch(setErrorAC(null));
   try {
     await cardPacksApi.deleteCardPack(cardPackId);
-    dispatch(setPageCount(initialState.pageCount));
-    dispatch(setPage(initialState.page));
+    const {pageCount, page} = getState().cardPacks;
+    dispatch(setCardPacksTC(pageCount, page));
   } catch (e) {
     dispatch(setErrorAC(e.response ? e.response.data.error : e.message));
   } finally {
@@ -127,13 +127,13 @@ export const deleteCardPackTC = (cardPackId: string): AppThunk => async dispatch
   }
 };
 
-export const addCardPackTC = (cardPack: Partial<AddCardPackRequestType>): AppThunk => async dispatch => {
+export const addCardPackTC = (cardPack: Partial<AddCardPackRequestType>): AppThunk => async (dispatch, getState) => {
   dispatch(setLoadingAC(true));
   dispatch(setErrorAC(null));
   try {
     await cardPacksApi.addCardPack(cardPack);
-    dispatch(setPageCount(initialState.pageCount));
-    dispatch(setPage(initialState.page));
+    const {pageCount, page} = getState().cardPacks;
+    dispatch(setCardPacksTC(pageCount, page));
   } catch (e) {
     dispatch(setErrorAC(e.response ? e.response.data.error : e.message));
   } finally {

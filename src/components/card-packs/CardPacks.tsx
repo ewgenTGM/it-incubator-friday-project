@@ -4,8 +4,9 @@ import {Link} from 'react-router-dom';
 import {Button} from 'antd';
 import {CardPackType} from '../../utils/cardPacksApi';
 import {CardPack} from './CardPack';
-import {useDispatch} from 'react-redux';
+import {useDispatch, useSelector} from 'react-redux';
 import {deleteCardPackTC} from '../../store/card-packs-reducer';
+import {AppStateType} from '../../store/store';
 
 type PropsType = {
   cardPacks: Array<CardPackType>
@@ -14,6 +15,7 @@ type PropsType = {
 export const CardPacks: React.VFC<PropsType> = props => {
 
     const dispatch = useDispatch();
+    const userId = useSelector<AppStateType, string | undefined>(state => state.appStatus.authData._id);
 
     const {cardPacks} = props;
 
@@ -21,51 +23,15 @@ export const CardPacks: React.VFC<PropsType> = props => {
       dispatch(deleteCardPackTC(cardPackId));
     };
 
-    const tableRows: Array<JSX.Element> = cardPacks.map((cp, index) => {
-      return (
-        <tr
-          className={styles.trow}
-          key={cp._id}>
-          <td className={styles.tableCell}>{index + 1}</td>
-          <td className={styles.tableCell}>{cp.name}</td>
-          <td className={styles.tableCell}>{cp.cardsCount}</td>
-          <td className={styles.tableCell}>{cp.grade}</td>
-          <td className={styles.tableCell}>{cp.rating}</td>
-          <td className={styles.tableCell}>{cp.shots}</td>
-          <td className={styles.tableCell}>
-            <Link to={`/cards/${cp._id}`}>
-              <Button type={'link'}>Просмотр</Button>
-            </Link>
-            <Button
-              type={'link'}
-              danger>Удалить</Button>
-          </td>
-        </tr>
-      );
-    });
-
     return (
       <div className={styles.cardsContainer}>
         {cardPacks.map(cp => <CardPack
           cardPack={cp}
+          isMyCardPack={userId===cp.user_id}
           onDelete={() => deleteCardPack(cp._id)}
           key={cp._id}/>)}
       </div>
-      /*<table className={styles.table}>
-       <thead className={styles.thead}>
-       <tr className={styles.headRow}>
-       <th className={styles.headCell}>#</th>
-       <th className={styles.headCell}>Name</th>
-       <th className={styles.headCell}>Cards count</th>
-       <th className={styles.headCell}>Grade</th>
-       <th className={styles.headCell}>Rating</th>
-       <th className={styles.headCell}>Shots</th>
-       <th className={styles.headCell}>Action</th>
-       </tr>
-       </thead>
-       <tbody className={styles.tableBody}>{tableRows}</tbody>
-       </table>*/
+
     );
   }
-;
 ;
