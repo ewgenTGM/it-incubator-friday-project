@@ -1,10 +1,12 @@
-import React, {useEffect, useState} from 'react';
+import React, {useEffect} from 'react';
 import {useDispatch, useSelector} from 'react-redux';
 import {Redirect, useParams} from 'react-router-dom';
 import {AppStateType} from '../store/store';
 import {PATH} from '../routes/Routes';
 import {Cards} from '../components/cards/Cards';
-import {CardsStateType, setCardsTC} from '../store/cards-reducer';
+import {addCardTC, CardsStateType, setCardsTC, setPage, setPageCount} from '../store/cards-reducer';
+import {Alert, Pagination, Row, Col, Spin, Divider} from 'antd';
+import {FieldWithButton} from '../components/field-with-button/FieldWithButton';
 
 type PropsType = {};
 
@@ -17,13 +19,10 @@ export const CardsPage: React.FC<PropsType> = props => {
     error,
     loading,
     cards,
-    cardPacksTotalCount,
-    maxCardsCount,
-    minCardsCount,
+    cardsTotalCount,
     page,
     pageCount
   } = useSelector<AppStateType, CardsStateType>(state => state.cards);
-
   useEffect(() => {
     dispatch(setCardsTC(pageCount, page, cardPackId));
   }, [pageCount, page, cardPackId, dispatch]);
@@ -32,11 +31,80 @@ export const CardsPage: React.FC<PropsType> = props => {
     return <Redirect to={PATH.LOGIN}/>;
   }
 
+  const onChangeHandler = (page: number) => {
+    dispatch(setPage(page));
+  };
+
+  const onShowSizeChangeHandler = (current: number, size: number) => {
+    dispatch(setPageCount(size));
+  };
+
+  const onAddCard = (question: string) => {
+    dispatch(addCardTC({question, cardsPack_id: cardPackId}));
+  };
+
+  const pagination: JSX.Element = <Pagination
+    onShowSizeChange={onShowSizeChangeHandler}
+    onChange={onChangeHandler}
+    defaultCurrent={1}
+    showSizeChanger={true}
+    current={page}
+    pageSize={pageCount}
+    disabled={loading || cardsTotalCount === 0}
+    showQuickJumper
+    total={cardsTotalCount}/>;
+
   return (
-    <div>
-      <h2>Cards Page</h2>
-      <span>Card pack id: {cardPackId}</span>
-      <Cards cards={cards}/>
-    </div>
+    <>
+      <Row justify={'center'}>
+        <Col
+          span={16}
+          offset={4}>
+          {pagination}
+        </Col>
+      </Row>
+      <Divider/>
+      <Row>
+        <Col
+          span={12}
+          offset={6}><FieldWithButton
+          action={onAddCard}
+          buttonLabel={'Добавить'}
+          inputPlaceholder={'Вопрос для карточки'}
+          disabled={loading}/></Col>
+      </Row>
+      {error &&
+      <Row
+          style={{marginTop: '25px'}}
+          justify={'center'}>
+          <Col>
+              <Alert
+                  message={error}
+                  type="error"
+                  closeText={'Close'}
+                  closable
+              />
+          </Col>
+      </Row>}
+      {loading
+        ? <Row justify={'center'}>
+          <Spin
+            size={'large'}
+            tip={'Loading...'}/>
+        </Row>
+        :
+        <>
+          <Divider plain>
+            {cards.length === 0 ? 'А карточек-то нет....' : 'Карточки из колоды'}
+          </Divider>
+          <Row
+            justify={'center'}
+            wrap
+            gutter={[40, 40]}>
+            <Cards cards={cards}/>
+          </Row>
+        </>
+      }
+    </>
   );
 };

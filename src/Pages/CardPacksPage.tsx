@@ -6,9 +6,9 @@ import {AppStateType} from '../store/store';
 import {CardPacks} from '../components/card-packs/CardPacks';
 import {Alert, Pagination, Spin, Switch} from 'antd';
 import {
-  addCardPackTC,
+  addCardsPackTC,
   CardPacksStateType,
-  setCardPacksTC,
+  setCardsPacksTC,
   setOnlyMyPacks,
   setPage,
   setPageCount
@@ -37,7 +37,7 @@ export const CardPacksPage: React.FC<PropsType> = props => {
   } = useSelector<AppStateType, CardPacksStateType>(state => state.cardPacks);
 
   useEffect(() => {
-    dispatch(setCardPacksTC(pageCount, page, onlyMyPacks ? myId : undefined));
+    dispatch(setCardsPacksTC(pageCount, page, onlyMyPacks ? myId : undefined));
   }, [pageCount, page, onlyMyPacks, myId, dispatch]);
 
   if (!isAuth) {
@@ -52,11 +52,11 @@ export const CardPacksPage: React.FC<PropsType> = props => {
   };
 
   const onSearch = (searchText: string) => {
-    dispatch(setCardPacksTC(pageCount, page, onlyMyPacks ? myId : undefined, searchText));
+    dispatch(setCardsPacksTC(pageCount, page, onlyMyPacks ? myId : undefined, searchText));
   };
 
   const onAdd = (cardPackName: string) => {
-    dispatch(addCardPackTC({name: cardPackName}));
+    dispatch(addCardsPackTC({name: cardPackName}));
   };
 
   return (

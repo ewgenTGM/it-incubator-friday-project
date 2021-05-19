@@ -1,6 +1,6 @@
 import {AppActionsType, AppThunk} from './store';
 import {APP_ACTION_TYPE} from './app-reducer';
-import {cardsApi, CardType} from '../utils/cardsApi';
+import {AddCardRequestType, cardsApi, CardType} from '../utils/cardsApi';
 
 export enum CARDS_ACTION_TYPE {
   SET_ERROR = 'CARDS/SET_ERROR',
@@ -15,7 +15,7 @@ export type CardsStateType = {
   error: null | string
   loading: boolean
   cards: Array<CardType>
-  cardPacksTotalCount: number
+  cardsTotalCount: number
   maxCardsCount: number
   minCardsCount: number
   page: number
@@ -26,7 +26,7 @@ const initialState: CardsStateType = {
   error: null,
   loading: false,
   cards: [],
-  cardPacksTotalCount: 0,
+  cardsTotalCount: 0,
   maxCardsCount: 0,
   minCardsCount: 0,
   pageCount: 10,
@@ -86,6 +86,7 @@ const setLoadingAC = (loading: boolean) => {
 };
 
 export const setCardsTC = (pageCount: number, page: number, cardsPack_id?: string): AppThunk => async dispatch => {
+
   dispatch(setLoadingAC(true));
   dispatch(setErrorAC(null));
   dispatch(setCards([]));
@@ -103,33 +104,33 @@ export const setCardsTC = (pageCount: number, page: number, cardsPack_id?: strin
   }
 };
 
-// export const deleteCardPackTC = (cardPackId: string): AppThunk => async dispatch => {
-//   dispatch(setLoadingAC(true));
-//   dispatch(setErrorAC(null));
-//   try {
-//     await cardPacksApi.deleteCardPack(cardPackId);
-//     dispatch(setPageCount(initialState.pageCount));
-//     dispatch(setPage(initialState.page));
-//   } catch (e) {
-//     dispatch(setErrorAC(e.response ? e.response.data.error : e.message));
-//   } finally {
-//     dispatch(setLoadingAC(false));
-//   }
-// };
-//
-// export const addCardPackTC = (cardPack: Partial<AddCardPackRequestType>): AppThunk => async dispatch => {
-//   dispatch(setLoadingAC(true));
-//   dispatch(setErrorAC(null));
-//   try {
-//     await cardPacksApi.addCardPack(cardPack);
-//     dispatch(setPageCount(initialState.pageCount));
-//     dispatch(setPage(initialState.page));
-//   } catch (e) {
-//     dispatch(setErrorAC(e.response ? e.response.data.error : e.message));
-//   } finally {
-//     dispatch(setLoadingAC(false));
-//   }
-// };
+export const deleteCardTC = (cardId: string, cardsPackId: string): AppThunk => async (dispatch, getState) => {
+  dispatch(setLoadingAC(true));
+  dispatch(setErrorAC(null));
+  try {
+    await cardsApi.deleteCard(cardId);
+    const {pageCount, page} = getState().cards;
+    dispatch(setCardsTC(pageCount, page, cardsPackId));
+  } catch (e) {
+    dispatch(setErrorAC(e.response ? e.response.data.error : e.message));
+  } finally {
+    dispatch(setLoadingAC(false));
+  }
+};
+
+export const addCardTC = (card: Partial<AddCardRequestType>): AppThunk => async (dispatch, getState) => {
+  dispatch(setLoadingAC(true));
+  dispatch(setErrorAC(null));
+  try {
+    await cardsApi.addCard(card);
+    const {pageCount, page} = getState().cards;
+    dispatch(setCardsTC(pageCount, page, card.cardsPack_id));
+  } catch (e) {
+    dispatch(setErrorAC(e.response ? e.response.data.error : e.message));
+  } finally {
+    dispatch(setLoadingAC(false));
+  }
+};
 
 export type CardsReducerActionsType =
   ReturnType<typeof setErrorAC>

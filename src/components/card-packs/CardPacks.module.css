@@ -1,46 +1,8 @@
-.cardsContainer {
+.packsContainer {
     padding: 25px;
     display: flex;
     align-items: center;
     justify-content: center;
     gap: 25px;
     flex-wrap: wrap;
-}
-
-
-
-
-.table {
-    margin: 30px auto;
-    width: 90%;
-    table-layout: fixed;
-    border-collapse: collapse;
-}
-
-.headRow {
-    height: 50px;
-    border-bottom: 2px solid black;
-}
-
-.trow {
-    border-bottom: 1px solid darkblue;
-}
-
-.headCell {
-    text-align: center;
-    font-weight: normal;
-    font-size: 18px;
-}
-
-.tableCell {
-    padding: 10px;
-    text-align: center;
-}
-
-.tableBody tr:nth-child(even) {
-    background-color: #ececec;
-}
-
-.tableBody tr:nth-child(odd) {
-    background-color: #e5e5e5;
 }

@@ -1,15 +1,13 @@
 import React from 'react';
 import styles from './CardPacks.module.css';
-import {Link} from 'react-router-dom';
-import {Button} from 'antd';
-import {CardPackType} from '../../utils/cardPacksApi';
+import {CardsPackType} from '../../utils/cardPacksApi';
 import {CardPack} from './CardPack';
 import {useDispatch, useSelector} from 'react-redux';
-import {deleteCardPackTC} from '../../store/card-packs-reducer';
+import {deleteCardsPackTC} from '../../store/card-packs-reducer';
 import {AppStateType} from '../../store/store';
 
 type PropsType = {
-  cardPacks: Array<CardPackType>
+  cardPacks: Array<CardsPackType>
 };
 
 export const CardPacks: React.VFC<PropsType> = props => {
@@ -20,11 +18,11 @@ export const CardPacks: React.VFC<PropsType> = props => {
     const {cardPacks} = props;
 
     const deleteCardPack = (cardPackId: string) => {
-      dispatch(deleteCardPackTC(cardPackId));
+      dispatch(deleteCardsPackTC(cardPackId));
     };
 
     return (
-      <div className={styles.cardsContainer}>
+      <div className={styles.packsContainer}>
         {cardPacks.map(cp => <CardPack
           cardPack={cp}
           isMyCardPack={userId===cp.user_id}

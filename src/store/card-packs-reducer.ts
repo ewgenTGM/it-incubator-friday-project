@@ -1,5 +1,5 @@
-import {AppActionsType, AppThunk, store} from './store';
-import {CardPackType, cardPacksApi, AddCardPackRequestType} from '../utils/cardPacksApi';
+import {AppActionsType, AppThunk} from './store';
+import {CardsPackType, cardPacksApi, AddCardsPackRequestType} from '../utils/cardPacksApi';
 import {APP_ACTION_TYPE} from './app-reducer';
 
 export enum CARD_PACKS_ACTION_TYPE {
@@ -15,7 +15,7 @@ export enum CARD_PACKS_ACTION_TYPE {
 export type CardPacksStateType = {
   error: null | string
   loading: boolean
-  cardPacks: Array<CardPackType>
+  cardPacks: Array<CardsPackType>
   cardPacksTotalCount: number
   maxCardsCount: number
   minCardsCount: number
@@ -57,7 +57,7 @@ export const cardPacksReducer = (state = initialState, action: AppActionsType): 
   }
 };
 
-const setCardPacks = (cardPacks: Array<CardPackType>) => {
+const setCardPacks = (cardPacks: Array<CardsPackType>) => {
   return {
     type: CARD_PACKS_ACTION_TYPE.SET_CARD_PACKS as const, payload: {cardPacks}
   };
@@ -95,13 +95,13 @@ const setLoadingAC = (loading: boolean) => {
   return {type: CARD_PACKS_ACTION_TYPE.SET_LOADING as const, payload: {loading}};
 };
 
-export const setCardPacksTC = (pageCount: number, page: number, user_id?: string, packName?: string): AppThunk => async dispatch => {
+export const setCardsPacksTC = (pageCount: number, page: number, user_id?: string, packName?: string): AppThunk => async dispatch => {
   dispatch(setLoadingAC(true));
   dispatch(setErrorAC(null));
   dispatch(setCardPacks([]));
 
   try {
-    const response = await cardPacksApi.getCardPacks({pageCount, page, user_id, packName});
+    const response = await cardPacksApi.getCardsPacks({pageCount, page, user_id, packName});
     dispatch(setCardPacks(response.data.cardPacks));
     dispatch(setCardPacksTotalCount(response.data.cardPacksTotalCount));
 
@@ -113,13 +113,14 @@ export const setCardPacksTC = (pageCount: number, page: number, user_id?: string
   }
 };
 
-export const deleteCardPackTC = (cardPackId: string): AppThunk => async (dispatch, getState) => {
+export const deleteCardsPackTC = (cardPackId: string): AppThunk => async (dispatch, getState) => {
   dispatch(setLoadingAC(true));
   dispatch(setErrorAC(null));
   try {
-    await cardPacksApi.deleteCardPack(cardPackId);
-    const {pageCount, page} = getState().cardPacks;
-    dispatch(setCardPacksTC(pageCount, page));
+    await cardPacksApi.deleteCardsPack(cardPackId);
+    const {pageCount, page, onlyMyPacks} = getState().cardPacks;
+    const _id = onlyMyPacks ? getState().appStatus.authData._id : undefined;
+    dispatch(setCardsPacksTC(pageCount, page, _id));
   } catch (e) {
     dispatch(setErrorAC(e.response ? e.response.data.error : e.message));
   } finally {
@@ -127,13 +128,14 @@ export const deleteCardPackTC = (cardPackId: string): AppThunk => async (dispatc
   }
 };
 
-export const addCardPackTC = (cardPack: Partial<AddCardPackRequestType>): AppThunk => async (dispatch, getState) => {
+export const addCardsPackTC = (cardPack: Partial<AddCardsPackRequestType>): AppThunk => async (dispatch, getState) => {
   dispatch(setLoadingAC(true));
   dispatch(setErrorAC(null));
   try {
-    await cardPacksApi.addCardPack(cardPack);
-    const {pageCount, page} = getState().cardPacks;
-    dispatch(setCardPacksTC(pageCount, page));
+    await cardPacksApi.addCardsPack(cardPack);
+    const {pageCount, page, onlyMyPacks} = getState().cardPacks;
+    const _id = onlyMyPacks ? getState().appStatus.authData._id : undefined;
+    dispatch(setCardsPacksTC(pageCount, page, _id));
   } catch (e) {
     dispatch(setErrorAC(e.response ? e.response.data.error : e.message));
   } finally {

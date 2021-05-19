@@ -3,24 +3,24 @@ import axios from 'axios';
 const LOCAL_URL = 'http://localhost:7542/2.0/';
 const REMOTE_URL = 'https://neko-back.herokuapp.com/2.0';
 
-const instance = axios.create({baseURL: LOCAL_URL, withCredentials: true});
+const instance = axios.create({baseURL: REMOTE_URL, withCredentials: true});
 
 export const cardPacksApi = {
-  getCardPacks(options: Partial<GetCardPacksRequestType>) {
-    return instance.get<CardPacksResponseType>('/cards/pack', {params: {...options}});
+  getCardsPacks(options: Partial<GetCardsPacksRequestType>) {
+    return instance.get<CardsPacksResponseType>('/cards/pack', {params: {...options}});
   },
 
-  deleteCardPack(cardPackId: string) {
+  deleteCardsPack(cardPackId: string) {
     return instance.delete('/cards/pack?id=' + cardPackId);
   },
 
-  addCardPack(cardsPack: Partial<AddCardPackRequestType>) {
+  addCardsPack(cardsPack: Partial<AddCardsPackRequestType>) {
     return instance.post('/cards/pack', {cardsPack: cardsPack});
   }
 };
 
-export type CardPacksResponseType = {
-  cardPacks: Array<CardPackType>
+export type CardsPacksResponseType = {
+  cardPacks: Array<CardsPackType>
   cardPacksTotalCount: number
   maxCardsCount: number
   minCardsCount: number
@@ -28,7 +28,7 @@ export type CardPacksResponseType = {
   pageCount: number
 }
 
-export type CardPackType = {
+export type CardsPackType = {
   _id: string
   user_id: string
   user_name: string
@@ -43,7 +43,7 @@ export type CardPackType = {
   updated: string
   __v: string
 }
-export type AddCardPackRequestType = {
+export type AddCardsPackRequestType = {
   name: string
   path: string
   grade: number
@@ -54,7 +54,7 @@ export type AddCardPackRequestType = {
   type: 'pack' | 'folder'
 }
 
-export type GetCardPacksRequestType = {
+export type GetCardsPacksRequestType = {
   packName: string
   min: number
   max: number

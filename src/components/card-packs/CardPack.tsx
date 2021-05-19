@@ -1,11 +1,11 @@
 import React from 'react';
 import styles from './CardPack.module.css';
-import {CardPackType} from '../../utils/cardPacksApi';
+import {CardsPackType} from '../../utils/cardPacksApi';
 import {Button, Popconfirm} from 'antd';
 import {Link} from 'react-router-dom';
 
 type PropsType = {
-  cardPack: CardPackType
+  cardPack: CardsPackType
   isMyCardPack: boolean
   onDelete: () => void
 };
@@ -14,8 +14,8 @@ export const CardPack: React.FC<PropsType> = props => {
   const {cardPack, onDelete, isMyCardPack} = props;
 
   return (
-    <div className={styles.card}>
-      <div className={styles.cardHeader}>
+    <div className={styles.pack}>
+      <div className={styles.packHeader}>
         <h3 style={{textAlign: 'center', textTransform: 'uppercase'}}>{cardPack.name}</h3>
       </div>
       <div className={styles.ratingCount}>
@@ -41,6 +41,7 @@ export const CardPack: React.FC<PropsType> = props => {
       <div className={styles.actions}>
         <Link to={`/cards/${cardPack._id}`}><Button
           className={styles.action}
+          disabled={!isMyCardPack && cardPack.cardsCount === 0}
         >
           View</Button></Link>
         <Button
