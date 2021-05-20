@@ -1,11 +1,6 @@
 .card {
-    display: flex;
-    flex-direction: column;
-    justify-content: flex-start;
-    align-items: center;
-    gap: 10px;
-    width: 250px;
-    height: 300px;
+    position: relative;
+    width: 300px;
     padding: 15px;
     border: 1px solid #afafaf;
     border-radius: 5px;
@@ -17,4 +12,17 @@
 .card:hover {
     transform: scale(1.03);
     transition: .3s;
+}
+
+.cardStats{
+    font-size: 18px;
+}
+
+.cardStatsValue{
+    font-size: 18px;
+    font-weight: bold;
+}
+
+.cardButton{
+    width: 90%;
 }

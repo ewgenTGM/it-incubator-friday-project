@@ -8,10 +8,12 @@ export enum CARDS_ACTION_TYPE {
   SET_PAGE = 'CARDS/SET_PAGE',
   SET_PAGE_COUNT = 'CARDS/SET_PAGE_COUNT',
   SET_CARDS = 'CARDS/SET_CARDS',
-  SET_CARDS_TOTAL_COUNT = 'CARDS/SET_CARDS_TOTAL_COUNT'
+  SET_CARDS_TOTAL_COUNT = 'CARDS/SET_CARDS_TOTAL_COUNT',
+  SET_PACK_OWNER = 'CARDS/SET_PACK_OWNER'
 }
 
 export type CardsStateType = {
+  packOwner: string
   error: null | string
   loading: boolean
   cards: Array<CardType>
@@ -23,6 +25,7 @@ export type CardsStateType = {
 }
 
 const initialState: CardsStateType = {
+  packOwner: '',
   error: null,
   loading: false,
   cards: [],
@@ -41,6 +44,7 @@ export const cardsReducer = (state = initialState, action: AppActionsType): Card
     case CARDS_ACTION_TYPE.SET_CARDS_TOTAL_COUNT:
     case CARDS_ACTION_TYPE.SET_PAGE:
     case CARDS_ACTION_TYPE.SET_PAGE_COUNT:
+    case CARDS_ACTION_TYPE.SET_PACK_OWNER:
       return {
         ...state,
         ...action.payload
@@ -56,6 +60,12 @@ export const cardsReducer = (state = initialState, action: AppActionsType): Card
 const setCards = (cards: Array<CardType>) => {
   return {
     type: CARDS_ACTION_TYPE.SET_CARDS as const, payload: {cards}
+  };
+};
+
+const setPackOwner = (packOwner: string) => {
+  return {
+    type: CARDS_ACTION_TYPE.SET_PACK_OWNER as const, payload: {packOwner}
   };
 };
 
@@ -139,3 +149,4 @@ export type CardsReducerActionsType =
   | ReturnType<typeof setPage>
   | ReturnType<typeof setPageCount>
   | ReturnType<typeof setCardsTotalCount>
+  | ReturnType<typeof setPackOwner>

@@ -3,14 +3,13 @@ import styles from './Login.module.css';
 import {useDispatch, useSelector} from 'react-redux';
 import {LoginStateType, loginTC} from '../../store/login-reducer';
 import {AppStateType} from '../../store/store';
-import {Redirect} from 'react-router-dom';
 import {emailValidator} from '../../utils/validators/email-validator';
 import {passwordValidator} from '../../utils/validators/password-validator';
 import {Alert, Button, Input, Switch} from 'antd';
 import {CheckOutlined, CloseOutlined} from '@ant-design/icons';
 
 export const Login: React.VFC = () => {
-  const [email, setEmail] = useState<string>('');
+  const [email, setEmail] = useState<string>('ewgenbi@gmail.com');
   const [pwd, setPwd] = useState<string>('');
   const [remember, setRemember] = useState<boolean>(false);
 

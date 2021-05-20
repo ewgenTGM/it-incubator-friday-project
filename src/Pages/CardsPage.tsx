@@ -6,7 +6,8 @@ import {PATH} from '../routes/Routes';
 import {Cards} from '../components/cards/Cards';
 import {addCardTC, CardsStateType, setCardsTC, setPage, setPageCount} from '../store/cards-reducer';
 import {Alert, Pagination, Row, Col, Spin, Divider} from 'antd';
-import {FieldWithButton} from '../components/field-with-button/FieldWithButton';
+import {AddCardForm} from '../components/cards/AddCardForm';
+import {AddCardRequestType} from '../utils/cardsApi';
 
 type PropsType = {};
 
@@ -21,7 +22,7 @@ export const CardsPage: React.FC<PropsType> = props => {
     cards,
     cardsTotalCount,
     page,
-    pageCount
+    pageCount,
   } = useSelector<AppStateType, CardsStateType>(state => state.cards);
   useEffect(() => {
     dispatch(setCardsTC(pageCount, page, cardPackId));
@@ -39,8 +40,8 @@ export const CardsPage: React.FC<PropsType> = props => {
     dispatch(setPageCount(size));
   };
 
-  const onAddCard = (question: string) => {
-    dispatch(addCardTC({question, cardsPack_id: cardPackId}));
+  const onAddCard = (card: Partial<AddCardRequestType>) => {
+    dispatch(addCardTC({...card, cardsPack_id: cardPackId}));
   };
 
   const pagination: JSX.Element = <Pagination
@@ -63,16 +64,17 @@ export const CardsPage: React.FC<PropsType> = props => {
           {pagination}
         </Col>
       </Row>
-      <Divider/>
-      <Row>
-        <Col
-          span={12}
-          offset={6}><FieldWithButton
-          action={onAddCard}
-          buttonLabel={'Добавить'}
-          inputPlaceholder={'Вопрос для карточки'}
-          disabled={loading}/></Col>
-      </Row>
+      <Divider plain>
+        {cardPackId}
+      </Divider>
+      {
+        <Row justify={'center'}>
+          <Col span={12}>
+            <AddCardForm
+              onSubmit={onAddCard}
+              disabled={loading}/>
+          </Col>
+        </Row>}
       {error &&
       <Row
           style={{marginTop: '25px'}}
