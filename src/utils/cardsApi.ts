@@ -14,6 +14,9 @@ export const cardsApi = {
   },
   addCard(card: Partial<AddCardRequestType>) {
     return instance.post('/cards/card', {card});
+  },
+  editCard(_id: string, question?: string) {
+    return instance.put('/cards/card', {cardsPack: {_id, question}});
   }
 };
 

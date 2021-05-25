@@ -1,6 +1,6 @@
 import React, {useEffect} from 'react';
 import {useDispatch, useSelector} from 'react-redux';
-import {Redirect, useParams} from 'react-router-dom';
+import {Redirect, useLocation, useParams} from 'react-router-dom';
 import {AppStateType} from '../store/store';
 import {PATH} from '../routes/Routes';
 import {Cards} from '../components/cards/Cards';
@@ -16,13 +16,16 @@ export const CardsPage: React.FC<PropsType> = props => {
   const dispatch = useDispatch();
   const isAuth = useSelector<AppStateType, boolean>(state => state.appStatus.isAuth);
   const {cardPackId} = useParams<{cardPackId: string}>();
+
+
+
   const {
     error,
     loading,
     cards,
     cardsTotalCount,
     page,
-    pageCount,
+    pageCount
   } = useSelector<AppStateType, CardsStateType>(state => state.cards);
   useEffect(() => {
     dispatch(setCardsTC(pageCount, page, cardPackId));
@@ -67,14 +70,13 @@ export const CardsPage: React.FC<PropsType> = props => {
       <Divider plain>
         {cardPackId}
       </Divider>
-      {
         <Row justify={'center'}>
           <Col span={12}>
             <AddCardForm
               onSubmit={onAddCard}
               disabled={loading}/>
           </Col>
-        </Row>}
+        </Row>
       {error &&
       <Row
           style={{marginTop: '25px'}}

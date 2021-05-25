@@ -15,6 +15,7 @@ function App() {
 
   useEffect(() => {
     if (!isInitialized) {
+      console.log('Call AppInitialize');
       dispatch(AppInitializeTC());
     }
     return;

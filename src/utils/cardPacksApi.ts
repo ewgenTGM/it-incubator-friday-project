@@ -16,6 +16,10 @@ export const cardPacksApi = {
 
   addCardsPack(cardsPack: Partial<AddCardsPackRequestType>) {
     return instance.post('/cards/pack', {cardsPack: cardsPack});
+  },
+
+  editCardsPack(_id: string, name?: string) {
+    return instance.put('/cards/pack', {cardsPack: {_id, name}});
   }
 };
 

@@ -142,6 +142,20 @@ export const addCardTC = (card: Partial<AddCardRequestType>): AppThunk => async 
   }
 };
 
+export const updateCardTC = (_id: string, packId: string, question: string): AppThunk => async (dispatch, getState) => {
+  dispatch(setLoadingAC(true));
+  dispatch(setErrorAC(null));
+  try {
+    await cardsApi.editCard(_id, question);
+    const {pageCount, page} = getState().cards;
+    dispatch(setCardsTC(pageCount, page, packId));
+  } catch (e) {
+    dispatch(setErrorAC(e.response ? e.response.data.error : e.message));
+  } finally {
+    dispatch(setLoadingAC(false));
+  }
+};
+
 export type CardsReducerActionsType =
   ReturnType<typeof setErrorAC>
   | ReturnType<typeof setLoadingAC>

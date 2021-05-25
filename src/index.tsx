@@ -8,12 +8,10 @@ import {HashRouter} from 'react-router-dom';
 import 'antd/dist/antd.css';
 
 ReactDOM.render(
-  <React.StrictMode>
-    <Provider store={store}>
-      <HashRouter>
-        <App/>
-      </HashRouter>
-    </Provider>
-  </React.StrictMode>,
+  <Provider store={store}>
+    <HashRouter>
+      <App/>
+    </HashRouter>
+  </Provider>,
   document.getElementById('root')
 );

@@ -40,10 +40,7 @@ export const logoutTC = (): AppThunk => async dispatch => {
   dispatch(setErrorAC(null));
   try {
     await authApi.logout();
-    //dispatch(setAuthDataAC({}));
-    //dispatch(setIsAuthAC(false));
     dispatch(clearStoreAC());
-    //dispatch(AppInitializeTC());
   } catch (e) {
     dispatch(setErrorAC(e.response ? e.response.data.error : e.message));
   } finally {

@@ -143,6 +143,21 @@ export const addCardsPackTC = (cardPack: Partial<AddCardsPackRequestType>): AppT
   }
 };
 
+export const updateCardsPack = (id: string, name?: string): AppThunk => async (dispatch, getState) => {
+  dispatch(setLoadingAC(true));
+  dispatch(setErrorAC(null));
+  try {
+    await cardPacksApi.editCardsPack(id, name);
+    const {pageCount, page, onlyMyPacks} = getState().cardPacks;
+    const _id = onlyMyPacks ? getState().appStatus.authData._id : undefined;
+    dispatch(setCardsPacksTC(pageCount, page, _id));
+  } catch (e) {
+    dispatch(setErrorAC(e.response ? e.response.data.error : e.message));
+  } finally {
+    dispatch(setLoadingAC(false));
+  }
+};
+
 export type CardPacksReducerActionsType =
   ReturnType<typeof setErrorAC>
   | ReturnType<typeof setLoadingAC>

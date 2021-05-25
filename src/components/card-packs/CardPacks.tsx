@@ -3,7 +3,7 @@ import styles from './CardPacks.module.css';
 import {CardsPackType} from '../../utils/cardPacksApi';
 import {CardPack} from './CardPack';
 import {useDispatch, useSelector} from 'react-redux';
-import {deleteCardsPackTC} from '../../store/card-packs-reducer';
+import {deleteCardsPackTC, updateCardsPack} from '../../store/card-packs-reducer';
 import {AppStateType} from '../../store/store';
 
 type PropsType = {
@@ -17,19 +17,23 @@ export const CardPacks: React.VFC<PropsType> = props => {
 
     const {cardPacks} = props;
 
-    const deleteCardPack = (cardPackId: string) => {
-      dispatch(deleteCardsPackTC(cardPackId));
+    const deleteCardsPack = (cardsPackId: string) => {
+      dispatch(deleteCardsPackTC(cardsPackId));
+    };
+
+    const editCardPack = (id: string, name: string) => {
+      dispatch(updateCardsPack(id, name));
     };
 
     return (
       <div className={styles.packsContainer}>
         {cardPacks.map(cp => <CardPack
           cardPack={cp}
-          isMyCardPack={userId===cp.user_id}
-          onDelete={() => deleteCardPack(cp._id)}
+          isMyCardPack={userId === cp.user_id}
+          onDelete={() => deleteCardsPack(cp._id)}
+          onEdit={(name: string) => editCardPack(cp._id, name)}
           key={cp._id}/>)}
       </div>
-
     );
   }
 ;
