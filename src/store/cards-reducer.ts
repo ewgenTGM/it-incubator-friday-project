@@ -14,6 +14,7 @@ export enum CARDS_ACTION_TYPE {
 
 export type CardsStateType = {
   packOwner: string
+  cardsPackId: string
   error: null | string
   loading: boolean
   cards: Array<CardType>
@@ -26,6 +27,7 @@ export type CardsStateType = {
 
 const initialState: CardsStateType = {
   packOwner: '',
+  cardsPackId: '',
   error: null,
   loading: false,
   cards: [],
@@ -57,9 +59,9 @@ export const cardsReducer = (state = initialState, action: AppActionsType): Card
   }
 };
 
-const setCards = (cards: Array<CardType>) => {
+const setCards = (cards: Array<CardType>, cardsPackId: string) => {
   return {
-    type: CARDS_ACTION_TYPE.SET_CARDS as const, payload: {cards}
+    type: CARDS_ACTION_TYPE.SET_CARDS as const, payload: {cards, cardsPackId}
   };
 };
 
@@ -95,15 +97,15 @@ const setLoadingAC = (loading: boolean) => {
   return {type: CARDS_ACTION_TYPE.SET_LOADING as const, payload: {loading}};
 };
 
-export const setCardsTC = (pageCount: number, page: number, cardsPack_id?: string): AppThunk => async dispatch => {
+export const setCardsTC = (pageCount: number, page: number, cardsPack_id: string): AppThunk => async dispatch => {
 
   dispatch(setLoadingAC(true));
   dispatch(setErrorAC(null));
-  dispatch(setCards([]));
+  dispatch(setCards([], cardsPack_id));
 
   try {
     const response = await cardsApi.getCards({pageCount, page, cardsPack_id});
-    dispatch(setCards(response.data.cards));
+    dispatch(setCards(response.data.cards, cardsPack_id));
     dispatch(setCardsTotalCount(response.data.cardsTotalCount));
 
   } catch (e) {
@@ -134,7 +136,7 @@ export const addCardTC = (card: Partial<AddCardRequestType>): AppThunk => async 
   try {
     await cardsApi.addCard(card);
     const {pageCount, page} = getState().cards;
-    dispatch(setCardsTC(pageCount, page, card.cardsPack_id));
+    dispatch(setCardsTC(pageCount, page, getState().cards.cardsPackId));
   } catch (e) {
     dispatch(setErrorAC(e.response ? e.response.data.error : e.message));
   } finally {
@@ -142,13 +144,13 @@ export const addCardTC = (card: Partial<AddCardRequestType>): AppThunk => async 
   }
 };
 
-export const updateCardTC = (_id: string, packId: string, question: string): AppThunk => async (dispatch, getState) => {
+export const updateCardTC = (_id: string, question?: string, answer?: string): AppThunk => async (dispatch, getState) => {
   dispatch(setLoadingAC(true));
   dispatch(setErrorAC(null));
   try {
-    await cardsApi.editCard(_id, question);
+    await cardsApi.editCard(_id, question, answer);
     const {pageCount, page} = getState().cards;
-    dispatch(setCardsTC(pageCount, page, packId));
+    dispatch(setCardsTC(pageCount, page, getState().cards.cardsPackId));
   } catch (e) {
     dispatch(setErrorAC(e.response ? e.response.data.error : e.message));
   } finally {

@@ -8,8 +8,8 @@ type ModalProps = {
   visibility: boolean
 }
 export const Modal: React.FC<ModalProps> = props => {
-
-  if (!props.visibility) {
+  const {onClose, onSubmit, visibility} = props;
+  if (!visibility) {
     window.document.body.classList.remove('ov_hidden');
     return null;
   }
@@ -26,10 +26,14 @@ export const Modal: React.FC<ModalProps> = props => {
           event.stopPropagation();
         }}>
         <div className={styles.children}>
+          <div
+            className={styles.closeBtn}
+            onClick={onClose}>X
+          </div>
           {props.children}
         </div>
-        <Button onClick={props.onSubmit}>Подтвердить</Button>
-        <Button onClick={props.onClose}>Закрыть</Button>
+        <Button onClick={onSubmit}>Подтвердить</Button>
+        <Button onClick={onClose}>Закрыть</Button>
       </div>
     </div>
   );

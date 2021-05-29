@@ -2,7 +2,7 @@ import React, {useState} from 'react';
 import {CardType} from '../../utils/cardsApi';
 import {Card} from './Card';
 import {useDispatch, useSelector} from 'react-redux';
-import {deleteCardTC} from '../../store/cards-reducer';
+import {deleteCardTC, updateCardTC} from '../../store/cards-reducer';
 import {Button, Col} from 'antd';
 import {AppStateType} from '../../store/store';
 
@@ -19,10 +19,15 @@ export const Cards: React.FC<PropsType> = props => {
     dispatch(deleteCardTC(cardId, cardsPackId));
   };
 
+  const editCard = (_id: string, question?: string, answer?: string) => {
+    dispatch(updateCardTC(_id, question, answer));
+  };
+
   return (
     <>
       {cards.map(card =>
         <Col
+          key={card._id}
           xxl={6}
           xl={8}
           lg={12}
@@ -30,6 +35,9 @@ export const Cards: React.FC<PropsType> = props => {
           <Card
             onDelete={() => deleteCard(card._id, card.cardsPack_id)}
             key={card._id}
+            onEdit={(question?: string, answer?: string) => {
+              editCard(card._id, question, answer);
+            }}
             ownCard={userId === card.user_id}
             card={card}/>
         </Col>

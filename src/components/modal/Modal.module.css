@@ -13,6 +13,7 @@
 }
 
 .modalContent {
+    position: relative;
     border: none;
     border-radius: 5px;
     display: flex;
@@ -24,4 +25,19 @@
     max-width: 400px;
     max-height: 300px;
     z-index: 21;
+}
+
+.closeBtn {
+    cursor: pointer;
+    font-size: 12px;
+    font-weight: bold;
+    border: none;
+    color: white;
+    background-color: darkgray;
+    border-radius: 50%;
+    width: 20px;
+    height: 20px;
+    position: absolute;
+    right: 10px;
+    top: 10px;
 }

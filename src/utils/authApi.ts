@@ -1,10 +1,9 @@
 import axios from 'axios';
+import {API} from './constants';
 
-const LOCAL_URL = 'http://localhost:7542/2.0/';
-const REMOTE_URL = 'https://neko-back.herokuapp.com/2.0';
 const FROM = 'test-front-admin<test@test.com>';
 
-const instance = axios.create({baseURL: REMOTE_URL, withCredentials: true});
+const instance = axios.create({baseURL: API, withCredentials: true});
 
 export const authApi = {
 

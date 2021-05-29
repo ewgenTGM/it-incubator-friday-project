@@ -1,9 +1,7 @@
 import axios from 'axios';
+import {API} from './constants';
 
-const LOCAL_URL = 'http://localhost:7542/2.0/';
-const REMOTE_URL = 'https://neko-back.herokuapp.com/2.0';
-
-const instance = axios.create({baseURL: REMOTE_URL, withCredentials: true});
+const instance = axios.create({baseURL: API, withCredentials: true});
 
 export const cardsApi = {
   getCards(options: Partial<GetCardsRequestType>) {
@@ -15,8 +13,8 @@ export const cardsApi = {
   addCard(card: Partial<AddCardRequestType>) {
     return instance.post('/cards/card', {card});
   },
-  editCard(_id: string, question?: string) {
-    return instance.put('/cards/card', {cardsPack: {_id, question}});
+  editCard(_id: string, question?: string, answer?: string) {
+    return instance.put('/cards/card', {card: {_id, question, answer}});
   }
 };
 
@@ -32,12 +30,12 @@ export type CardsResponseType = {
 
 export type CardType = {
   answer: string
-  question:string
+  question: string
   cardsPack_id: string
-  grade:number
-  rating:number
+  grade: number
+  rating: number
   shots: number
-  type: "cards" | "folder"
+  type: 'cards' | 'folder'
   user_id: string
   created: string
   updated: string
@@ -45,26 +43,26 @@ export type CardType = {
   _id: string
 }
 export type AddCardRequestType = {
-    cardsPack_id:string
-    question: string
-    answer: string
-    grade: number
-    shots: number
-    rating: number
-    answerImg: string
-    questionImg:string
-    questionVideo: string
-    answerVideo: string
-    type: string
+  cardsPack_id: string
+  question: string
+  answer: string
+  grade: number
+  shots: number
+  rating: number
+  answerImg: string
+  questionImg: string
+  questionVideo: string
+  answerVideo: string
+  type: string
 }
 
 export type GetCardsRequestType = {
-  cardAnswer:string
-  cardQuestion:string
-  cardsPack_id:string
+  cardAnswer: string
+  cardQuestion: string
+  cardsPack_id: string
   min: number
   max: number
-  sortCards:string
+  sortCards: string
   page: number
   pageCount: number
 }

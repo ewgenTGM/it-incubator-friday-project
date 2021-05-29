@@ -2,6 +2,8 @@
   "name": "friday-project",
   "version": "0.1.0",
   "private": true,
+  "localApi": "http://localhost:7542/2.0/",
+  "remoteApi": "https://neko-back.herokuapp.com/2.0",
   "homepage": "https://ewgenTGM.github.io/it-incubator-friday-project",
   "dependencies": {
     "@ant-design/icons": "^4.6.2",

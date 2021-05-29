@@ -102,6 +102,7 @@ export const CardsPage: React.FC<PropsType> = props => {
             {cards.length === 0 ? 'А карточек-то нет....' : 'Карточки из колоды'}
           </Divider>
           <Row
+            style={{padding: '25px'}}
             justify={'center'}
             wrap
             gutter={[40, 40]}>
