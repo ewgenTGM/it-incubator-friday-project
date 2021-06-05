@@ -6,7 +6,8 @@ import {CardsPackType} from '../utils/cardPacksApi';
 export enum TRAINIGN_ACTION_TYPE {
   SET_ERROR = 'TRAIN/SET_ERROR',
   SET_LOADING = 'TRAIN/SET_LOADING',
-  SET_CARDS = 'TRAIN/SET_CARDS'
+  SET_CARDS = 'TRAIN/SET_CARDS',
+  SET_GRADE = 'TRAIN/SET_GRADE'
 }
 
 export type TrainingStateType = {
@@ -29,6 +30,14 @@ const setCardsAC = (cards: Array<CardType>, cardsPackId: string) => {
   };
 };
 
+const setGradeAC = (cardId: string, grade: number) => {
+  return {
+    type: TRAINIGN_ACTION_TYPE.SET_GRADE as const,
+    payload: {
+      cardId, grade
+    }
+  };
+};
 
 const setErrorAC = (error: null | string) => {
   return {type: TRAINIGN_ACTION_TYPE.SET_ERROR as const, payload: {error}};
@@ -56,6 +65,23 @@ export const setCardsTC = (cardsPack_id: string): AppThunk => async dispatch => 
   }
 };
 
+export const setGradeTC = (card_id: string, grade: number): AppThunk => async dispatch => {
+
+  dispatch(setLoadingAC(true));
+  dispatch(setErrorAC(null));
+
+  try {
+    const response = await cardsApi.gradeCard({grade, card_id});
+    dispatch(setGradeAC(response.data.updatedGrade.card_id, response.data.updatedGrade.grade));
+
+  } catch (e) {
+    dispatch(setErrorAC(e.response ? e.response.data.error : e.message));
+
+  } finally {
+    dispatch(setLoadingAC(false));
+  }
+};
+
 export const trainingReducer = (state: TrainingStateType = initialState, action: AppActionsType) => {
   switch (action.type) {
     case TRAINIGN_ACTION_TYPE.SET_ERROR:
@@ -65,6 +91,15 @@ export const trainingReducer = (state: TrainingStateType = initialState, action:
         ...state,
         ...action.payload
       };
+    case TRAINIGN_ACTION_TYPE.SET_GRADE: {
+      return {
+        ...state,
+        cards: state.cards.map(card => card._id !== action.payload.cardId ? card : {
+          ...card,
+          grade: action.payload.grade
+        })
+      };
+    }
 
     case APP_ACTION_TYPE.CLEAR_STORE:
       return initialState;
@@ -78,3 +113,4 @@ export type TrainingReducerActionsType =
   ReturnType<typeof setErrorAC>
   | ReturnType<typeof setLoadingAC>
   | ReturnType<typeof setCardsAC>
+  | ReturnType<typeof setGradeAC>

@@ -9,9 +9,9 @@ import {
   addCardsPackTC,
   CardPacksStateType,
   setCardsPacksTC,
-  setOnlyMyPacks,
-  setPage,
-  setPageCount
+  setOnlyMyPacksAC,
+  setPageAC,
+  setPageCountAC, setShowEmptyPacksAC
 } from '../store/card-packs-reducer';
 import {CheckOutlined, CloseOutlined} from '@ant-design/icons';
 import {FieldWithButton} from '../components/field-with-button/FieldWithButton';
@@ -33,22 +33,23 @@ export const CardPacksPage: React.FC<PropsType> = props => {
     cardPacksTotalCount,
     page,
     pageCount,
-    onlyMyPacks
+    onlyMyPacks,
+    showEmptyPacks
   } = useSelector<AppStateType, CardPacksStateType>(state => state.cardPacks);
 
   useEffect(() => {
     dispatch(setCardsPacksTC(pageCount, page, onlyMyPacks ? myId : undefined));
-  }, [pageCount, page, onlyMyPacks, myId, dispatch]);
+  }, [pageCount, page, onlyMyPacks, showEmptyPacks, myId, dispatch]);
 
   if (!isAuth) {
     return <Redirect to={PATH.LOGIN}/>;
   }
   const onChangeHandler = (page: number) => {
-    dispatch(setPage(page));
+    dispatch(setPageAC(page));
   };
 
   const onShowSizeChangeHandler = (current: number, size: number) => {
-    dispatch(setPageCount(size));
+    dispatch(setPageCountAC(size));
   };
 
   const onSearch = (searchText: string) => {
@@ -73,17 +74,24 @@ export const CardPacksPage: React.FC<PropsType> = props => {
           disabled={loading}
           showQuickJumper
           total={cardPacksTotalCount}/>
-          <label
-            htmlFor="rememberMe"
-          >Только мои колоды</label>
-          <Switch
-            disabled={loading}
-            checkedChildren={<CheckOutlined/>}
-            unCheckedChildren={<CloseOutlined/>}
-            defaultChecked={false}
-            checked={onlyMyPacks}
-            onChange={(checked) => dispatch(setOnlyMyPacks(checked))}
-          />
+        </div>
+        <div className={styles.checkBoxBar}>
+          <div className={styles.checkBoxBarItem}><label>Только мои колоды</label>
+            <Switch
+              disabled={loading}
+              checkedChildren={<CheckOutlined/>}
+              unCheckedChildren={<CloseOutlined/>}
+              checked={onlyMyPacks}
+              onChange={(checked) => dispatch(setOnlyMyPacksAC(checked))}
+            /></div>
+          <div className={styles.checkBoxBarItem}><label>Показывать пустые колоды</label>
+            <Switch
+              disabled={loading}
+              checkedChildren={<CheckOutlined/>}
+              unCheckedChildren={<CloseOutlined/>}
+              checked={showEmptyPacks}
+              onChange={(checked) => dispatch(setShowEmptyPacksAC(checked))}
+            /></div>
         </div>
         <div className={styles.searchBar}>
           <FieldWithButton

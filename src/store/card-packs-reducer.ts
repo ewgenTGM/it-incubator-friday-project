@@ -9,7 +9,8 @@ export enum CARD_PACKS_ACTION_TYPE {
   SET_PAGE_COUNT = 'CARD_PACKS/SET_PAGE_COUNT',
   SET_CARD_PACKS = 'CARD_PACKS/SET_CARD_PACKS',
   SET_CARD_PACKS_TOTAL_COUNT = 'CARD_PACKS/SET_CARD_PACKS_TOTAL_COUNT',
-  SET_ONLY_MY_PACKS = 'CARD_PACKS/SET_ONLY_MY_PACKS'
+  SET_ONLY_MY_PACKS = 'CARD_PACKS/SET_ONLY_MY_PACKS',
+  SET_SHOW_EMPTY_PACKS = 'CARD_PACKS/SET_SHOW_EMPTY_PACKS',
 }
 
 export type CardPacksStateType = {
@@ -22,6 +23,7 @@ export type CardPacksStateType = {
   page: number
   pageCount: number
   onlyMyPacks: boolean
+  showEmptyPacks: boolean
 }
 
 const initialState: CardPacksStateType = {
@@ -33,7 +35,8 @@ const initialState: CardPacksStateType = {
   minCardsCount: 0,
   pageCount: 10,
   page: 1,
-  onlyMyPacks: false
+  onlyMyPacks: false,
+  showEmptyPacks: true
 };
 
 export const cardPacksReducer = (state = initialState, action: AppActionsType): CardPacksStateType => {
@@ -45,6 +48,7 @@ export const cardPacksReducer = (state = initialState, action: AppActionsType): 
     case CARD_PACKS_ACTION_TYPE.SET_PAGE:
     case CARD_PACKS_ACTION_TYPE.SET_PAGE_COUNT:
     case CARD_PACKS_ACTION_TYPE.SET_ONLY_MY_PACKS:
+    case CARD_PACKS_ACTION_TYPE.SET_SHOW_EMPTY_PACKS:
       return {
         ...state,
         ...action.payload
@@ -57,33 +61,39 @@ export const cardPacksReducer = (state = initialState, action: AppActionsType): 
   }
 };
 
-const setCardPacks = (cardPacks: Array<CardsPackType>) => {
+const setCardPacksAC = (cardPacks: Array<CardsPackType>) => {
   return {
     type: CARD_PACKS_ACTION_TYPE.SET_CARD_PACKS as const, payload: {cardPacks}
   };
 };
 
-export const setPage = (page: number) => {
+export const setPageAC = (page: number) => {
   return {
     type: CARD_PACKS_ACTION_TYPE.SET_PAGE as const, payload: {page}
   };
 };
 
-const setCardPacksTotalCount = (cardPacksTotalCount: number) => {
+const setCardPacksTotalCountAC = (cardPacksTotalCount: number) => {
   return {
     type: CARD_PACKS_ACTION_TYPE.SET_CARD_PACKS_TOTAL_COUNT as const, payload: {cardPacksTotalCount}
   };
 };
 
-export const setPageCount = (pageCount: number) => {
+export const setPageCountAC = (pageCount: number) => {
   return {
     type: CARD_PACKS_ACTION_TYPE.SET_PAGE_COUNT as const, payload: {pageCount}
   };
 };
 
-export const setOnlyMyPacks = (onlyMyPacks: boolean) => {
+export const setOnlyMyPacksAC = (onlyMyPacks: boolean) => {
   return {
     type: CARD_PACKS_ACTION_TYPE.SET_ONLY_MY_PACKS as const, payload: {onlyMyPacks}
+  };
+};
+
+export const setShowEmptyPacksAC = (showEmptyPacks: boolean) => {
+  return {
+    type: CARD_PACKS_ACTION_TYPE.SET_SHOW_EMPTY_PACKS as const, payload: {showEmptyPacks}
   };
 };
 
@@ -95,15 +105,15 @@ const setLoadingAC = (loading: boolean) => {
   return {type: CARD_PACKS_ACTION_TYPE.SET_LOADING as const, payload: {loading}};
 };
 
-export const setCardsPacksTC = (pageCount: number, page: number, user_id?: string, packName?: string): AppThunk => async dispatch => {
+export const setCardsPacksTC = (pageCount: number, page: number, user_id?: string, packName?: string): AppThunk => async (dispatch, getState) => {
   dispatch(setLoadingAC(true));
   dispatch(setErrorAC(null));
-  dispatch(setCardPacks([]));
-
+  dispatch(setCardPacksAC([]));
+  const min = getState().cardPacks.showEmptyPacks ? undefined : 1;
   try {
-    const response = await cardPacksApi.getCardsPacks({pageCount, page, user_id, packName});
-    dispatch(setCardPacks(response.data.cardPacks));
-    dispatch(setCardPacksTotalCount(response.data.cardPacksTotalCount));
+    const response = await cardPacksApi.getCardsPacks({pageCount, page, user_id, packName, min: min});
+    dispatch(setCardPacksAC(response.data.cardPacks));
+    dispatch(setCardPacksTotalCountAC(response.data.cardPacksTotalCount));
 
   } catch (e) {
     dispatch(setErrorAC(e.response ? e.response.data.error : e.message));
@@ -161,8 +171,9 @@ export const updateCardsPack = (id: string, name?: string): AppThunk => async (d
 export type CardPacksReducerActionsType =
   ReturnType<typeof setErrorAC>
   | ReturnType<typeof setLoadingAC>
-  | ReturnType<typeof setCardPacks>
-  | ReturnType<typeof setPage>
-  | ReturnType<typeof setPageCount>
-  | ReturnType<typeof setCardPacksTotalCount>
-  | ReturnType<typeof setOnlyMyPacks>
+  | ReturnType<typeof setCardPacksAC>
+  | ReturnType<typeof setPageAC>
+  | ReturnType<typeof setPageCountAC>
+  | ReturnType<typeof setCardPacksTotalCountAC>
+  | ReturnType<typeof setOnlyMyPacksAC>
+  | ReturnType<typeof setShowEmptyPacksAC>
