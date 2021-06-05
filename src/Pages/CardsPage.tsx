@@ -4,7 +4,7 @@ import {Redirect, useLocation, useParams} from 'react-router-dom';
 import {AppStateType} from '../store/store';
 import {PATH} from '../routes/Routes';
 import {Cards} from '../components/cards/Cards';
-import {addCardTC, CardsStateType, setCardsTC, setPage, setPageCount} from '../store/cards-reducer';
+import {addCardTC, CardsStateType, setCardsTC, setPageAC, setPageCountAC} from '../store/cards-reducer';
 import {Alert, Pagination, Row, Col, Spin, Divider} from 'antd';
 import {AddCardForm} from '../components/cards/AddCardForm';
 import {AddCardRequestType} from '../utils/cardsApi';
@@ -27,6 +27,7 @@ export const CardsPage: React.FC<PropsType> = props => {
     page,
     pageCount
   } = useSelector<AppStateType, CardsStateType>(state => state.cards);
+
   useEffect(() => {
     dispatch(setCardsTC(pageCount, page, cardPackId));
   }, [pageCount, page, cardPackId, dispatch]);
@@ -36,11 +37,11 @@ export const CardsPage: React.FC<PropsType> = props => {
   }
 
   const onChangeHandler = (page: number) => {
-    dispatch(setPage(page));
+    dispatch(setPageAC(page));
   };
 
   const onShowSizeChangeHandler = (current: number, size: number) => {
-    dispatch(setPageCount(size));
+    dispatch(setPageCountAC(size));
   };
 
   const onAddCard = (card: Partial<AddCardRequestType>) => {

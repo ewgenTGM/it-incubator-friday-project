@@ -10,6 +10,7 @@ import {passChangeReducer, PassChangeReducerActionsType} from './pass-change-red
 import {passRecoveryReducer, PassRecoveryReducerActionsType} from './pass-recovery-reducer';
 import {cardPacksReducer, CardPacksReducerActionsType} from './card-packs-reducer';
 import {cardsReducer, CardsReducerActionsType} from './cards-reducer';
+import {trainingReducer, TrainingReducerActionsType} from './training-reducer';
 
 const rootReducer = combineReducers({
   test: testReducer,
@@ -20,7 +21,8 @@ const rootReducer = combineReducers({
   passChange: passChangeReducer,
   passRecovery: passRecoveryReducer,
   cardPacks: cardPacksReducer,
-  cards: cardsReducer
+  cards: cardsReducer,
+  train: trainingReducer
 });
 
 export type AppStateType = ReturnType<typeof rootReducer>;
@@ -36,7 +38,8 @@ export type AppActionsType =
   | RegistrationReducerActionsType
   | PassRecoveryReducerActionsType
   | CardPacksReducerActionsType
-  | CardsReducerActionsType;
+  | CardsReducerActionsType
+  | TrainingReducerActionsType
 
 export type AppThunk<ReturnType = void> = ThunkAction<ReturnType,
   AppStateType,

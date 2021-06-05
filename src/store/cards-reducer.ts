@@ -59,31 +59,31 @@ export const cardsReducer = (state = initialState, action: AppActionsType): Card
   }
 };
 
-const setCards = (cards: Array<CardType>, cardsPackId: string) => {
+const setCardsAC = (cards: Array<CardType>, cardsPackId: string) => {
   return {
     type: CARDS_ACTION_TYPE.SET_CARDS as const, payload: {cards, cardsPackId}
   };
 };
 
-const setPackOwner = (packOwner: string) => {
+const setPackOwnerAC = (packOwner: string) => {
   return {
     type: CARDS_ACTION_TYPE.SET_PACK_OWNER as const, payload: {packOwner}
   };
 };
 
-export const setPage = (page: number) => {
+export const setPageAC = (page: number) => {
   return {
     type: CARDS_ACTION_TYPE.SET_PAGE as const, payload: {page}
   };
 };
 
-const setCardsTotalCount = (cardsTotalCount: number) => {
+const setCardsTotalCountAC = (cardsTotalCount: number) => {
   return {
     type: CARDS_ACTION_TYPE.SET_CARDS_TOTAL_COUNT as const, payload: {cardsTotalCount}
   };
 };
 
-export const setPageCount = (pageCount: number) => {
+export const setPageCountAC = (pageCount: number) => {
   return {
     type: CARDS_ACTION_TYPE.SET_PAGE_COUNT as const, payload: {pageCount}
   };
@@ -101,12 +101,12 @@ export const setCardsTC = (pageCount: number, page: number, cardsPack_id: string
 
   dispatch(setLoadingAC(true));
   dispatch(setErrorAC(null));
-  dispatch(setCards([], cardsPack_id));
+  dispatch(setCardsAC([], cardsPack_id));
 
   try {
     const response = await cardsApi.getCards({pageCount, page, cardsPack_id});
-    dispatch(setCards(response.data.cards, cardsPack_id));
-    dispatch(setCardsTotalCount(response.data.cardsTotalCount));
+    dispatch(setCardsAC(response.data.cards, cardsPack_id));
+    dispatch(setCardsTotalCountAC(response.data.cardsTotalCount));
 
   } catch (e) {
     dispatch(setErrorAC(e.response ? e.response.data.error : e.message));
@@ -161,8 +161,8 @@ export const updateCardTC = (_id: string, question?: string, answer?: string): A
 export type CardsReducerActionsType =
   ReturnType<typeof setErrorAC>
   | ReturnType<typeof setLoadingAC>
-  | ReturnType<typeof setCards>
-  | ReturnType<typeof setPage>
-  | ReturnType<typeof setPageCount>
-  | ReturnType<typeof setCardsTotalCount>
-  | ReturnType<typeof setPackOwner>
+  | ReturnType<typeof setCardsAC>
+  | ReturnType<typeof setPageAC>
+  | ReturnType<typeof setPageCountAC>
+  | ReturnType<typeof setCardsTotalCountAC>
+  | ReturnType<typeof setPackOwnerAC>

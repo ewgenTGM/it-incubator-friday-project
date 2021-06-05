@@ -1,9 +1,9 @@
-import React, {useState} from 'react';
+import React from 'react';
 import {CardType} from '../../utils/cardsApi';
 import {Card} from './Card';
 import {useDispatch, useSelector} from 'react-redux';
 import {deleteCardTC, updateCardTC} from '../../store/cards-reducer';
-import {Button, Col} from 'antd';
+import {Col} from 'antd';
 import {AppStateType} from '../../store/store';
 
 type PropsType = {
@@ -28,8 +28,8 @@ export const Cards: React.FC<PropsType> = props => {
       {cards.map(card =>
         <Col
           key={card._id}
-          xxl={6}
-          xl={8}
+          xxl={8}
+          xl={12}
           lg={12}
           flex={'none'}>
           <Card
