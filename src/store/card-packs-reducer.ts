@@ -36,7 +36,7 @@ const initialState: CardPacksStateType = {
   pageCount: 10,
   page: 1,
   onlyMyPacks: false,
-  showEmptyPacks: true
+  showEmptyPacks: false
 };
 
 export const cardPacksReducer = (state = initialState, action: AppActionsType): CardPacksStateType => {
