@@ -17,7 +17,7 @@ export const cardsApi = {
     return instance.put('/cards/card', {card: {_id, question, answer}});
   },
   gradeCard(grade: CardGradeRequestType) {
-    return instance.put<CardGradeResponseType>('/cards/grade', {grade});
+    return instance.put<CardGradeResponseType>('/cards/grade', grade);
   }
 };
 

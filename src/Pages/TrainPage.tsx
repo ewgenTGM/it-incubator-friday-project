@@ -1,7 +1,7 @@
-import {Button, Col, Row, Space} from 'antd';
+import {Button, Col, Popconfirm, Row, Space} from 'antd';
 import React, {useEffect, useState} from 'react';
 import styles from './TrainPage.module.css';
-import {Redirect, useParams} from 'react-router-dom';
+import {Link, Redirect, useParams} from 'react-router-dom';
 import {useDispatch, useSelector} from 'react-redux';
 import {setCardsTC, setGradeTC, TrainingStateType} from '../store/training-reducer';
 import {TrainingCard} from '../components/training-card/TrainingCard';
@@ -16,6 +16,7 @@ export const TrainPage: React.FC<PropsType> = props => {
   const [currentCard, setCurrentCard] = useState<CardType | null>(null);
   const [firstRun, setFirstRun] = useState<boolean>(true);
   const [checked, setChecked] = useState(false);
+  const [returnToPacks, setReturnToPacks] = useState<boolean>(false);
   const {cardPackId} = useParams<{cardPackId: string}>();
   const isAuth = useSelector<AppStateType, boolean>(state => state.appStatus.isAuth);
   const {cards, cardsPack, error, loading} = useSelector<AppStateType, TrainingStateType>(state => state.train);
@@ -58,13 +59,17 @@ export const TrainPage: React.FC<PropsType> = props => {
     return <Redirect to={PATH.LOGIN}/>;
   }
 
+  if (returnToPacks) {
+    return <Redirect to={PATH.CARD_PACKS}/>;
+  }
+
   const takeGrade = (grade: number) => {
     if (currentCard)
-    dispatch(setGradeTC(currentCard._id, grade));
+      dispatch(setGradeTC(currentCard._id, grade));
   };
   const gradeButtons: Array<JSX.Element> = grades.map((grade, index) =>
     <Button
-      onClick={() => takeGrade(index)}
+      onClick={() => takeGrade(index + 1)}
       disabled={!checked || loading}>{grade}</Button>);
 
   return (
@@ -90,6 +95,20 @@ export const TrainPage: React.FC<PropsType> = props => {
           style={{marginTop: '10px'}}>
           <Space>{gradeButtons}</Space>
       </Row>}
+      <Row
+        justify={'center'}
+        style={{marginTop: '10px'}}>
+        <Popconfirm
+          onConfirm={() => setReturnToPacks(true)}
+          title={'Вы уверены?'}
+          okText={'Да'}
+          cancelText={'Нет'}>
+          <Button
+            danger>
+            Вернуться к колодам
+          </Button>
+        </Popconfirm>
+      </Row>
     </>
   );
 };
