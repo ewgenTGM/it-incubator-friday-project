@@ -9,7 +9,7 @@ import {Alert, Button, Input, Switch} from 'antd';
 import {CheckOutlined, CloseOutlined} from '@ant-design/icons';
 
 export const Login: React.VFC = () => {
-  const [email, setEmail] = useState<string>('ewgenbi@gmail.com');
+  const [email, setEmail] = useState<string>('');
   const [pwd, setPwd] = useState<string>('');
   const [remember, setRemember] = useState<boolean>(false);
 
